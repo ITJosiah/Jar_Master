@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_background">
+
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="@dimen/splash_logo_size"
+        android:layout_height="@dimen/splash_logo_size"
+        android:background="@drawable/aling_logo"
+        android:padding="@dimen/splash_logo_padding"
+        android:contentDescription="@string/app_logo_description"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@id/tvAppName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.45" />
+
+
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/splash_app_name_margin_top"
+        android:alpha="0"
+        android:text="@string/app_name_display"
+        android:textSize="@dimen/splash_app_name_text_size"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/text_primary"
+        app:layout_constraintBottom_toTopOf="@id/tvTagline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo"
+        tools:text="Aling Master" />
+
+
+    <TextView
+        android:id="@+id/tvTagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/splash_tagline_margin_top"
+        android:alpha="0"
+        android:text="@string/tagline"
+        android:textSize="@dimen/splash_tagline_text_size"
+        android:letterSpacing="0.18"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppName"
+        tools:text="FRESHNESS PRESERVED" />
+
+    <!-- Progress Bar Container (bottom) -->
+    <LinearLayout
+        android:id="@+id/progressContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/splash_progress_margin_horizontal"
+        android:layout_marginEnd="@dimen/splash_progress_margin_horizontal"
+        android:layout_marginBottom="@dimen/splash_progress_margin_bottom"
+        android:orientation="vertical"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvProgressLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/initializing_label"
+                android:textSize="@dimen/splash_progress_label_text_size"
+                android:letterSpacing="0.12"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_hint"
+                tools:text="INITIALIZING FRESHNESS..." />
+
+            <TextView
+                android:id="@+id/tvProgressPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textSize="@dimen/splash_progress_percent_text_size"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/green_primary"
+                tools:text="30%" />
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/splash_progress_bar_height"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar_drawable"
+            android:background="@drawable/progress_bar_drawable" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

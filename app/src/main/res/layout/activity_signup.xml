@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/login_horizontal_padding"
+        android:paddingEnd="@dimen/login_horizontal_padding"
+        android:paddingTop="@dimen/login_top_padding"
+        android:paddingBottom="@dimen/login_bottom_padding">
+
+        <!-- App Logo -->
+        <ImageView
+            android:id="@+id/ivRegisterLogo"
+            android:layout_width="@dimen/logo_size"
+            android:layout_height="@dimen/logo_size"
+            android:src="@drawable/ic_aling_logo"
+            android:contentDescription="App Logo"
+            android:padding="@dimen/logo_padding"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/tvRegisterAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/app_short_name"
+            android:textSize="@dimen/text_title"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivRegisterLogo" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvRegisterSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/register_subtitle"
+            android:textSize="@dimen/text_subtitle"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterAppName" />
+
+        <!-- ── Full Name Label ── -->
+        <TextView
+            android:id="@+id/tvFullNameLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_full_name"
+            android:textSize="@dimen/text_label"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRegisterSubtitle" />
+
+        <!-- ── Full Name Input ── -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFullName"
+            style="@style/LoginInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxCornerRadiusBottomEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/login_input_corner_radius"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:startIconDrawable="@drawable/ic_person"
+            app:boxStrokeColor="@color/input_stroke_selector"
+            app:startIconTint="@color/text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFullNameLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_full_name"
+                android:inputType="textPersonName|textCapWords"
+                android:textSize="@dimen/text_input"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:paddingTop="@dimen/input_padding_vertical"
+                android:paddingBottom="@dimen/input_padding_vertical"
+                android:imeOptions="actionNext" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ── Email Label ── -->
+        <TextView
+            android:id="@+id/tvEmailLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/label_email"
+            android:textSize="@dimen/text_label"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilFullName" />
+
+        <!-- ── Email Input ── -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
+            style="@style/LoginInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:boxCornerRadiusBottomEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/login_input_corner_radius"
+            app:boxStrokeColor="@color/input_stroke_selector"
+            app:startIconDrawable="@drawable/ic_email"
+            app:startIconTint="@color/text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmailLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/text_input"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:paddingTop="@dimen/input_padding_vertical"
+                android:paddingBottom="@dimen/input_padding_vertical"
+                android:imeOptions="actionNext" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ── Password Label ── -->
+        <TextView
+            android:id="@+id/tvRegPasswordLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/label_password"
+            android:textSize="@dimen/text_label"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilEmail" />
+
+        <!-- ── Password Input ── -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRegPassword"
+            style="@style/LoginInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:boxCornerRadiusBottomEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/login_input_corner_radius"
+            app:boxStrokeColor="@color/input_stroke_selector"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/text_hint"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvRegPasswordLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/text_input"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:paddingTop="@dimen/input_padding_vertical"
+                android:paddingBottom="@dimen/input_padding_vertical"
+                android:imeOptions="actionNext" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ── Confirm Password Label ── -->
+        <TextView
+            android:id="@+id/tvConfirmPasswordLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/label_confirm_password"
+            android:textSize="@dimen/text_label"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilRegPassword" />
+
+        <!-- ── Confirm Password Input ── -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfirmPassword"
+            style="@style/LoginInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:boxCornerRadiusBottomEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/login_input_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/login_input_corner_radius"
+            app:boxStrokeColor="@color/input_stroke_selector"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/text_hint"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmPasswordLabel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/text_input"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:paddingTop="@dimen/input_padding_vertical"
+                android:paddingBottom="@dimen/input_padding_vertical"
+                android:imeOptions="actionDone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ── User Role Label ── -->
+        <TextView
+            android:id="@+id/tvUserRoleLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/label_user_role"
+            android:textSize="@dimen/text_label"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword" />
+
+        <!-- ── Role Card: Admin ── -->
+        <include
+            android:id="@+id/cardAdmin"
+            layout="@layout/item_role_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUserRoleLabel" />
+
+        <!-- ── Role Card: Production Staff ── -->
+        <include
+            android:id="@+id/cardProduction"
+            layout="@layout/item_role_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardAdmin" />
+
+        <!-- ── Role Card: Sales Assistant ── -->
+        <include
+            android:id="@+id/cardSales"
+            layout="@layout/item_role_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardProduction" />
+
+        <!-- ── Create Account Button ── -->
+        <Button
+            android:id="@+id/btnCreateAccount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/create_account"
+            android:textSize="@dimen/text_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green_primary"
+            android:stateListAnimator="@null"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardSales" />
+
+        <!-- ── Already have account row ── -->
+        <LinearLayout
+            android:id="@+id/llLoginRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnCreateAccount">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_have_account"
+                android:textSize="@dimen/text_small"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvLogIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:text="@string/log_in"
+                android:textSize="@dimen/text_small"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/green_primary"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- ── Terms & Privacy Footer ── -->
+        <TextView
+            android:id="@+id/tvTerms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/terms_text"
+            android:textSize="@dimen/text_footer"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_hint"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llLoginRow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

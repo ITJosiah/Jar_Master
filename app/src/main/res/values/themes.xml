@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Aling_Jar" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.Aling.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Aling_Jar" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorAccent">@color/green_primary</item>
+        <item name="colorControlActivated">@color/green_primary</item>
+
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="hintTextColor">@color/text_hint</item>
+
+    </style>
+
+    <style name="LoginInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <item name="hintTextColor">@color/green_primary</item>
+        <item name="boxStrokeColor">@color/green_primary</item>
+
+    </style>
+
+</resources>

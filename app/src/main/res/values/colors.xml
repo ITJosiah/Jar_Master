@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="splash_background">#FFFFFF</color>
+    <color name="green_primary">#3DBA5F</color>
+    <color name="green_light_bg">#D6F5E0</color>
+    <color name="progress_track">#E8E8E8</color>
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#8A8A9A</color>
+    <color name="text_hint">#94A3B8</color>
+    <color name="light_green">#E8F8EE</color>
+
+</resources>

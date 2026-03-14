@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/login_horizontal_padding"
+        android:paddingEnd="@dimen/login_horizontal_padding"
+        android:paddingTop="@dimen/login_top_padding"
+        android:paddingBottom="@dimen/login_bottom_padding">
+
+        <!-- Success Circle Background -->
+        <FrameLayout
+            android:id="@+id/flSuccessIcon"
+            android:layout_width="@dimen/success_circle_size"
+            android:layout_height="@dimen/success_circle_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.28">
+
+            <!-- Checkmark Icon -->
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_success_icon"
+                android:contentDescription="Success checkmark" />
+        </FrameLayout>
+
+        <!-- Title: Account Created Successfully! -->
+        <TextView
+            android:id="@+id/tvSuccessTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/account_created_title"
+            android:textSize="@dimen/success_title_size"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flSuccessIcon" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvSuccessSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/account_created_subtitle"
+            android:textSize="@dimen/text_subtitle"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuccessTitle" />
+
+        <!-- Get Started Button -->
+        <Button
+            android:id="@+id/btnGetStarted"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            android:text="@string/get_started"
+            android:textSize="@dimen/text_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green_primary"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuccessSubtitle" />
+
+        <!-- Go to Dashboard -->
+        <Button
+            android:id="@+id/tvGoToDashboard"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="8dp"
+            android:text="@string/go_to_dashboard"
+            android:textSize="@dimen/text_button"
+            android:textColor="@color/green_primary"
+            android:fontFamily="@font/poppins_semibold"
+            android:backgroundTint="@color/light_green"
+            android:textAllCaps="false"
+            android:stateListAnimator="@null"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnGetStarted" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/splash_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/login_horizontal_padding"
+        android:paddingEnd="@dimen/login_horizontal_padding"
+        android:paddingTop="@dimen/verify_top_padding"
+        android:paddingBottom="@dimen/login_bottom_padding">
+
+        <!-- Back Arrow -->
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/verify_back_icon_size"
+            android:layout_height="@dimen/verify_back_icon_size"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Go back"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Title: Verify Email -->
+        <TextView
+            android:id="@+id/tvVerifyTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_email"
+            android:textSize="@dimen/text_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivBack"
+            app:layout_constraintBottom_toBottomOf="@id/ivBack" />
+
+        <!-- Email Icon -->
+        <ImageView
+            android:id="@+id/ivEmailIcon"
+            android:layout_width="125dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_email_verify"
+            android:contentDescription="Email icon"
+            android:layout_marginTop="@dimen/verify_icon_margin_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivBack" />
+
+        <!-- Heading: Check your email -->
+        <TextView
+            android:id="@+id/tvCheckEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/check_your_email"
+            android:textSize="@dimen/text_title"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/text_primary"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivEmailIcon" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvVerifyDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/verification_code_sent"
+            android:textSize="@dimen/text_subtitle"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCheckEmail" />
+
+        <!-- 4-Digit Code Input Row -->
+        <LinearLayout
+            android:id="@+id/llCodeInputs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvVerifyDesc">
+
+            <EditText
+                android:id="@+id/etCode1"
+                android:layout_width="@dimen/verify_code_box_size"
+                android:layout_height="@dimen/verify_code_box_size"
+                android:background="@drawable/bg_code_input"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="@dimen/verify_code_text_size"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/text_primary"
+                android:cursorVisible="false"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/etCode2"
+                android:layout_width="@dimen/verify_code_box_size"
+                android:layout_height="@dimen/verify_code_box_size"
+                android:layout_marginStart="@dimen/verify_code_gap"
+                android:background="@drawable/bg_code_input"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="@dimen/verify_code_text_size"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/text_primary"
+                android:cursorVisible="false"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/etCode3"
+                android:layout_width="@dimen/verify_code_box_size"
+                android:layout_height="@dimen/verify_code_box_size"
+                android:layout_marginStart="@dimen/verify_code_gap"
+                android:background="@drawable/bg_code_input"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="@dimen/verify_code_text_size"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/text_primary"
+                android:cursorVisible="false"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/etCode4"
+                android:layout_width="@dimen/verify_code_box_size"
+                android:layout_height="@dimen/verify_code_box_size"
+                android:layout_marginStart="@dimen/verify_code_gap"
+                android:background="@drawable/bg_code_input"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="@dimen/verify_code_text_size"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/text_primary"
+                android:cursorVisible="false"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <!-- Verify Button -->
+        <Button
+            android:id="@+id/btnVerify"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/verify"
+            android:textSize="@dimen/text_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green_primary"
+            android:stateListAnimator="@null"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llCodeInputs" />
+
+        <!-- Didn't receive the code? Resend Code -->
+        <LinearLayout
+            android:id="@+id/llResendRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnVerify">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resend_code_prompt"
+                android:textSize="@dimen/text_small"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/tvResendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:text="@string/resend_code"
+                android:textSize="@dimen/text_small"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/green_primary"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

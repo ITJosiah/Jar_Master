@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="splash_logo_size">160dp</dimen>
+    <dimen name="splash_logo_padding">20dp</dimen>
+    <dimen name="splash_app_name_margin_top">28dp</dimen>
+    <dimen name="splash_app_name_text_size">40sp</dimen>
+    <dimen name="splash_tagline_margin_top">10dp</dimen>
+    <dimen name="splash_tagline_text_size">14sp</dimen>
+    <dimen name="splash_progress_margin_horizontal">64dp</dimen>
+    <dimen name="splash_progress_margin_bottom">64dp</dimen>
+    <dimen name="splash_progress_label_text_size">12sp</dimen>
+    <dimen name="splash_progress_percent_text_size">12sp</dimen>
+    <dimen name="splash_progress_bar_height">7dp</dimen>
+
+    <!-- Login Screen -->
+    <dimen name="login_padding_horizontal">48dp</dimen>
+    <dimen name="login_padding_bottom">48dp</dimen>
+    <dimen name="login_title_margin_top">100dp</dimen>
+    <dimen name="login_title_text_size">34sp</dimen>
+    <dimen name="login_subtitle_margin_top">10dp</dimen>
+    <dimen name="login_subtitle_text_size">15sp</dimen>
+    <dimen name="login_label_margin_top">48dp</dimen>
+    <dimen name="login_label_text_size">15sp</dimen>
+    <dimen name="login_input_margin_top">8dp</dimen>
+    <dimen name="login_input_text_size">16sp</dimen>
+    <dimen name="login_input_padding_vertical">16dp</dimen>
+    <dimen name="login_input_corner_radius">12dp</dimen>
+    <dimen name="login_password_label_margin_top">20dp</dimen>
+    <dimen name="login_remember_margin_top">18dp</dimen>
+    <dimen name="login_remember_text_size">15sp</dimen>
+    <dimen name="login_forgot_margin_top">36dp</dimen>
+    <dimen name="login_forgot_text_size">15sp</dimen>
+    <dimen name="login_button_margin_top">32dp</dimen>
+    <dimen name="login_button_height">56dp</dimen>
+    <dimen name="login_button_text_size">17sp</dimen>
+    <dimen name="login_button_corner_radius">14dp</dimen>
+    <dimen name="login_register_margin_top">32dp</dimen>
+    <dimen name="login_register_text_size">15sp</dimen>
+    <dimen name="login_footer_margin_top">56dp</dimen>
+    <dimen name="login_footer_text_size">12sp</dimen>
+
+    <!-- Constrain form content on tablets -->
+    <dimen name="login_form_max_width">480dp</dimen>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  SIGN UP SCREEN                             -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <!-- ── Layout Padding ── -->
+    <dimen name="login_horizontal_padding">64dp</dimen>
+    <dimen name="login_top_padding">80dp</dimen>
+    <dimen name="login_bottom_padding">40dp</dimen>
+
+    <!-- ── Margins ── -->
+    <dimen name="margin_xsmall">8dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_medium">20dp</dimen>
+    <dimen name="margin_large">28dp</dimen>
+    <dimen name="margin_xlarge">56dp</dimen>
+    <dimen name="margin_section">44dp</dimen>
+
+    <!-- ── Text Sizes ── -->
+    <dimen name="text_title">30sp</dimen>
+    <dimen name="text_subtitle">15sp</dimen>
+    <dimen name="text_label">15sp</dimen>
+    <dimen name="text_input">16sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_button">17sp</dimen>
+    <dimen name="text_footer">13sp</dimen>
+
+    <!-- ── Input Fields ── -->
+    <dimen name="input_padding_vertical">16dp</dimen>
+    <dimen name="input_corner_radius">12dp</dimen>
+    <dimen name="input_stroke_width">1.5dp</dimen>
+    <dimen name="input_icon_size">22dp</dimen>
+
+    <!-- ── Button ── -->
+    <dimen name="button_height">60dp</dimen>
+    <dimen name="button_corner_radius">14dp</dimen>
+
+    <!-- ── Card (Role selection) ── -->
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_stroke_width">1.5dp</dimen>
+
+    <!-- ── Logo / Icon ── -->
+    <dimen name="logo_size">96dp</dimen>
+    <dimen name="logo_padding">14dp</dimen>
+    <dimen name="splash_progress_height">6dp</dimen>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  EMAIL VERIFICATION SCREEN                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <dimen name="verify_top_padding">64dp</dimen>
+    <dimen name="verify_back_icon_size">32dp</dimen>
+    <dimen name="verify_icon_size">88dp</dimen>
+    <dimen name="verify_icon_margin_top">56dp</dimen>
+    <dimen name="verify_code_box_size">68dp</dimen>
+    <dimen name="verify_code_text_size">26sp</dimen>
+    <dimen name="verify_code_gap">16dp</dimen>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  SIGN UP SUCCESS SCREEN                    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <dimen name="success_circle_size">200dp</dimen>
+    <dimen name="success_icon_size">88dp</dimen>
+    <dimen name="success_title_size">28sp</dimen>
+
+</resources>
