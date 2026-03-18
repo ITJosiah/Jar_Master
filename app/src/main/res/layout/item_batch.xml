@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/admin_item_card_margin_bottom"
+    app:cardCornerRadius="@dimen/admin_card_corner"
+    app:cardElevation="@dimen/admin_card_elevation"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/admin_item_padding">
+
+        <!-- Batch Number & Status Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/admin_item_gap_small">
+
+            <TextView
+                android:id="@+id/tvBatchNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="BATCH #LA-2024-001"
+                android:textSize="@dimen/admin_item_batch_number_size"
+                android:textColor="#888888"
+                android:letterSpacing="0.05" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FRESH"
+                android:textSize="@dimen/admin_item_badge_size"
+                android:textColor="#4CAF50"
+                android:background="@drawable/bg_badge_green"
+                android:paddingStart="@dimen/admin_item_badge_padding_h"
+                android:paddingEnd="@dimen/admin_item_badge_padding_h"
+                android:paddingTop="@dimen/admin_item_badge_padding_v"
+                android:paddingBottom="@dimen/admin_item_badge_padding_v" />
+
+        </LinearLayout>
+
+        <!-- Product Name -->
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spicy Laing (Classic)"
+            android:textSize="@dimen/admin_item_product_name_size"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:layout_marginBottom="@dimen/admin_item_gap_medium" />
+
+        <!-- Units & Date Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/admin_item_gap_large">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/admin_item_icon_size"
+                        android:layout_height="@dimen/admin_item_icon_size"
+                        android:src="@drawable/ic_batches"
+                        app:tint="#888888"
+                        android:layout_marginEnd="@dimen/admin_item_icon_margin" />
+
+                    <TextView
+                        android:id="@+id/tvUnits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="142 Units"
+                        android:textSize="@dimen/admin_item_detail_size"
+                        android:textColor="#555555" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₱180.00"
+                    android:textSize="@dimen/admin_item_price_size"
+                    android:textStyle="bold"
+                    android:textColor="#4CAF50"
+                    android:layout_marginTop="2dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/admin_item_icon_size"
+                    android:layout_height="@dimen/admin_item_icon_size"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="#888888"
+                    android:layout_marginEnd="@dimen/admin_item_icon_margin" />
+
+                <TextView
+                    android:id="@+id/tvExpiryDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oct 12, 2023"
+                    android:textSize="@dimen/admin_item_detail_size"
+                    android:textColor="#555555" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0"
+            android:layout_marginBottom="@dimen/admin_item_gap_large" />
+
+        <!-- Edit & Spoilage Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/admin_item_button_height"
+                android:layout_weight="1"
+                android:text="Edit"
+                android:textSize="@dimen/admin_item_button_text_size"
+                android:textColor="#475569"
+                android:layout_marginEnd="@dimen/admin_item_button_gap"
+                android:textAllCaps="false"
+                app:backgroundTint="#F8FAFC"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="#475569"
+                app:iconGravity="textStart"
+                app:cornerRadius="@dimen/admin_item_button_corner" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSpoilage"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/admin_item_button_height"
+                android:layout_weight="1"
+                android:text="Spoilage"
+                android:textAllCaps="false"
+                android:textSize="@dimen/admin_item_button_text_size"
+                android:textColor="#DC2626"
+                app:backgroundTint="#FEF2F2"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="#DC2626"
+                app:iconGravity="textStart"
+                app:cornerRadius="@dimen/admin_item_button_corner" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

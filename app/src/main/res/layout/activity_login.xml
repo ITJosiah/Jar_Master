@@ -78,7 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/login_label_margin_top"
-                android:text="Email"
+                android:text="Email Address"
                 android:textSize="@dimen/login_label_text_size"
                 android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/text_primary"
@@ -86,7 +86,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
-            <!-- Username Input -->
+            <!-- Email Address Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilUsername"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -110,7 +110,7 @@
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter your email"
+                    android:hint="Enter your email address"
                     android:textColorHint="@color/black"
                     android:inputType="text"
                     android:textSize="@dimen/login_input_text_size"
@@ -218,16 +218,123 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cbRememberMe" />
 
+            <!-- ── OAuth Divider ── -->
+            <LinearLayout
+                android:id="@+id/llOAuthDivider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSignIn">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/divider_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/or_continue_with"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/login_remember_text_size" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/divider_color" />
+            </LinearLayout>
+
+            <!-- ── OAuth Buttons Row ── -->
+            <LinearLayout
+                android:id="@+id/llOAuthButtons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llOAuthDivider">
+
+                <!-- Google Button -->
+                <LinearLayout
+                    android:id="@+id/btnGoogle"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_oauth_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/continue_google"
+                        android:src="@drawable/ic_google" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/continue_google"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/login_remember_text_size" />
+                </LinearLayout>
+
+                <!-- Facebook Button -->
+                <LinearLayout
+                    android:id="@+id/btnFacebook"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_oauth_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/continue_facebook"
+                        android:src="@drawable/ic_facebook" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/continue_facebook"
+                        android:textColor="@color/facebook_blue"
+                        android:textSize="@dimen/login_remember_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
             <!-- Don't have an account -->
             <LinearLayout
                 android:id="@+id/llRegisterRow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/login_register_margin_top"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnSignIn">
+                app:layout_constraintTop_toBottomOf="@id/llOAuthButtons">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -241,7 +348,7 @@
                     android:id="@+id/tvRequestAccess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Request access"
+                    android:text="Sign Up"
                     android:textSize="@dimen/login_register_text_size"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/green_primary"

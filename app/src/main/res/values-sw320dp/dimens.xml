@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ═══════════════════════════════════════════ -->
+    <!--  sw320dp  —  Small phones (~4.5–5" screens) -->
+    <!-- ═══════════════════════════════════════════ -->
+
+    <!-- ── Admin Layout Padding ── -->
+    <dimen name="admin_padding">12dp</dimen>
+    <dimen name="admin_padding_large">18dp</dimen>
+
+    <!-- ── Profile Header ── -->
+    <dimen name="admin_profile_size">40dp</dimen>
+    <dimen name="admin_profile_name_size">14sp</dimen>
+    <dimen name="admin_profile_role_size">11sp</dimen>
+    <dimen name="admin_profile_margin_start">8dp</dimen>
+
+    <!-- ── Summary Cards ── -->
+    <dimen name="admin_card_corner">10dp</dimen>
+    <dimen name="admin_card_padding">10dp</dimen>
+    <dimen name="admin_card_elevation">2dp</dimen>
+    <dimen name="admin_card_label_size">9sp</dimen>
+    <dimen name="admin_card_value_size">18sp</dimen>
+    <dimen name="admin_card_change_size">10sp</dimen>
+    <dimen name="admin_card_gap">4dp</dimen>
+
+    <!-- ── Buttons ── -->
+    <dimen name="admin_button_height">44dp</dimen>
+    <dimen name="admin_button_text_size">13sp</dimen>
+    <dimen name="admin_button_corner">22dp</dimen>
+
+    <!-- ── Section Headers ── -->
+    <dimen name="admin_section_icon_size">18dp</dimen>
+    <dimen name="admin_section_title_size">13sp</dimen>
+    <dimen name="admin_section_badge_size">10sp</dimen>
+    <dimen name="admin_section_margin_bottom">6dp</dimen>
+    <dimen name="admin_section_gap">4dp</dimen>
+    <dimen name="admin_section_margin_top">12dp</dimen>
+
+    <!-- ── Top Bar ── -->
+    <dimen name="admin_topbar_title_size">16sp</dimen>
+    <dimen name="admin_topbar_icon_size">22dp</dimen>
+    <dimen name="admin_topbar_add_size">32dp</dimen>
+    <dimen name="admin_topbar_add_icon_size">18dp</dimen>
+
+    <!-- ── Search ── -->
+    <dimen name="admin_search_corner">22dp</dimen>
+    <dimen name="admin_search_text_size">12sp</dimen>
+    <dimen name="admin_search_icon_size">16dp</dimen>
+    <dimen name="admin_search_padding_h">12dp</dimen>
+    <dimen name="admin_search_padding_v">8dp</dimen>
+
+    <!-- ── Filter Tabs ── -->
+    <dimen name="admin_tab_height">32dp</dimen>
+    <dimen name="admin_tab_text_size">11sp</dimen>
+    <dimen name="admin_tab_padding_h">12dp</dimen>
+    <dimen name="admin_tab_inner_padding_h">10dp</dimen>
+    <dimen name="admin_tab_dot_size">6dp</dimen>
+    <dimen name="admin_tab_margin_end">6dp</dimen>
+    <dimen name="admin_tab_margin_bottom">10dp</dimen>
+
+    <!-- ── Settings ── -->
+    <dimen name="admin_settings_title_size">20sp</dimen>
+    <dimen name="admin_settings_title_margin_bottom">20dp</dimen>
+    <dimen name="admin_settings_profile_size">48dp</dimen>
+    <dimen name="admin_settings_name_size">14sp</dimen>
+    <dimen name="admin_settings_email_size">12sp</dimen>
+    <dimen name="admin_settings_badge_size">10sp</dimen>
+    <dimen name="admin_settings_version_label_size">12sp</dimen>
+    <dimen name="admin_settings_version_size">13sp</dimen>
+    <dimen name="admin_settings_card_margin_bottom">12dp</dimen>
+    <dimen name="admin_settings_card_corner">10dp</dimen>
+    <dimen name="admin_settings_profile_margin_start">12dp</dimen>
+
+    <!-- ── Bottom Nav ── -->
+    <dimen name="admin_bottom_nav_height">60dp</dimen>
+    <dimen name="admin_bottom_nav_margin">60dp</dimen>
+    <dimen name="admin_fab_margin_bottom">35dp</dimen>
+
+    <!-- ── Notification ── -->
+    <dimen name="admin_notification_size">22dp</dimen>
+
+    <!-- ── Batch Count Header ── -->
+    <dimen name="admin_batch_count_size">11sp</dimen>
+    <dimen name="admin_filter_icon_size">18dp</dimen>
+
+    <!-- ── Orders ── -->
+    <dimen name="admin_order_count_size">11sp</dimen>
+    <dimen name="admin_order_icon_size">18dp</dimen>
+
+    <!-- ── RecyclerView ── -->
+    <dimen name="admin_rv_padding_h">12dp</dimen>
+    <dimen name="admin_rv_padding_bottom">12dp</dimen>
+    <dimen name="admin_rv_margin_bottom">12dp</dimen>
+
+    <!-- ── Logout ── -->
+    <dimen name="admin_logout_height">44dp</dimen>
+    <dimen name="admin_logout_text_size">13sp</dimen>
+    <dimen name="admin_logout_corner">10dp</dimen>
+    <dimen name="admin_logout_margin_bottom">12dp</dimen>
+
+    <!-- ── Item Cards (Batch & Order) ── -->
+    <dimen name="admin_item_card_margin_bottom">10dp</dimen>
+    <dimen name="admin_item_padding">12dp</dimen>
+    <dimen name="admin_item_batch_number_size">9sp</dimen>
+    <dimen name="admin_item_product_name_size">14sp</dimen>
+    <dimen name="admin_item_price_size">12sp</dimen>
+    <dimen name="admin_item_detail_size">11sp</dimen>
+    <dimen name="admin_item_icon_size">12dp</dimen>
+    <dimen name="admin_item_icon_margin">3dp</dimen>
+    <dimen name="admin_item_gap_small">3dp</dimen>
+    <dimen name="admin_item_gap_medium">6dp</dimen>
+    <dimen name="admin_item_gap_large">10dp</dimen>
+    <dimen name="admin_item_button_height">38dp</dimen>
+    <dimen name="admin_item_button_text_size">11sp</dimen>
+    <dimen name="admin_item_button_corner">6dp</dimen>
+    <dimen name="admin_item_button_gap">6dp</dimen>
+    <dimen name="admin_item_badge_padding_h">8dp</dimen>
+    <dimen name="admin_item_badge_padding_v">2dp</dimen>
+    <dimen name="admin_item_badge_size">9sp</dimen>
+    <dimen name="admin_item_total_size">13sp</dimen>
+    <dimen name="admin_item_time_size">10sp</dimen>
+    <dimen name="admin_item_customer_name_size">12sp</dimen>
+
+</resources>

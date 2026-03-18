@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/admin_padding">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/admin_topbar_icon_size"
+            android:layout_height="@dimen/admin_topbar_icon_size"
+            android:src="@drawable/ic_back"
+            android:layout_marginEnd="@dimen/admin_tab_margin_bottom" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Batches"
+            android:textSize="@dimen/admin_topbar_title_size"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:gravity="center" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/admin_topbar_add_size"
+            android:layout_height="@dimen/admin_topbar_add_size"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardBackgroundColor="#E8F5E9">
+
+            <ImageView
+                android:id="@+id/btnAdd"
+                android:layout_width="@dimen/admin_topbar_add_icon_size"
+                android:layout_height="@dimen/admin_topbar_add_icon_size"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add"
+                app:tint="#4CAF50" />
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <!-- Search Bar -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/admin_padding"
+        android:layout_marginEnd="@dimen/admin_padding"
+        android:layout_marginBottom="@dimen/admin_tab_margin_bottom"
+        app:cardCornerRadius="@dimen/admin_search_corner"
+        app:cardElevation="@dimen/admin_card_elevation"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/admin_search_padding_h"
+            android:paddingEnd="@dimen/admin_search_padding_h"
+            android:paddingTop="@dimen/admin_search_padding_v"
+            android:paddingBottom="@dimen/admin_search_padding_v">
+
+            <ImageView
+                android:layout_width="@dimen/admin_search_icon_size"
+                android:layout_height="@dimen/admin_search_icon_size"
+                android:src="@drawable/ic_search"
+                app:tint="#AAAAAA"
+                android:layout_marginEnd="@dimen/admin_section_margin_bottom" />
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search batch or product..."
+                android:textColorHint="#AAAAAA"
+                android:textSize="@dimen/admin_search_text_size"
+                android:textColor="#222222"
+                android:background="@null"
+                android:singleLine="true" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Filter Tabs -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_marginStart="@dimen/admin_padding"
+        android:layout_marginEnd="@dimen/admin_padding"
+        android:layout_marginBottom="@dimen/admin_tab_margin_bottom">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- All Batches Tab (Active) -->
+            <TextView
+                android:id="@+id/tabAll"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/admin_tab_height"
+                android:text="All Batches"
+                android:textSize="@dimen/admin_tab_text_size"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_tab_active"
+                android:gravity="center"
+                android:paddingStart="@dimen/admin_tab_padding_h"
+                android:paddingEnd="@dimen/admin_tab_padding_h"
+                android:layout_marginEnd="@dimen/admin_tab_margin_end" />
+
+            <!-- Fresh Tab -->
+            <LinearLayout
+                android:id="@+id/tabFresh"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/admin_tab_height"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bg_tab_inactive"
+                android:paddingStart="@dimen/admin_tab_inner_padding_h"
+                android:paddingEnd="@dimen/admin_tab_inner_padding_h"
+                android:layout_marginEnd="@dimen/admin_tab_margin_end">
+
+                <View
+                    android:layout_width="@dimen/admin_tab_dot_size"
+                    android:layout_height="@dimen/admin_tab_dot_size"
+                    android:background="@drawable/bg_dot_green"
+                    android:layout_marginEnd="@dimen/admin_section_gap" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fresh"
+                    android:textSize="@dimen/admin_tab_text_size"
+                    android:textColor="#555555" />
+
+            </LinearLayout>
+
+            <!-- 30 Days Tab -->
+            <LinearLayout
+                android:id="@+id/tab30Days"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/admin_tab_height"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bg_tab_inactive"
+                android:paddingStart="@dimen/admin_tab_inner_padding_h"
+                android:paddingEnd="@dimen/admin_tab_inner_padding_h"
+                android:layout_marginEnd="@dimen/admin_tab_margin_end">
+
+                <View
+                    android:layout_width="@dimen/admin_tab_dot_size"
+                    android:layout_height="@dimen/admin_tab_dot_size"
+                    android:background="@drawable/bg_dot_orange"
+                    android:layout_marginEnd="@dimen/admin_section_gap" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30 Days"
+                    android:textSize="@dimen/admin_tab_text_size"
+                    android:textColor="#555555" />
+
+            </LinearLayout>
+
+            <!-- Expired Tab -->
+            <LinearLayout
+                android:id="@+id/tabExpired"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/admin_tab_height"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/bg_tab_inactive"
+                android:paddingStart="@dimen/admin_tab_inner_padding_h"
+                android:paddingEnd="@dimen/admin_tab_inner_padding_h">
+
+                <View
+                    android:layout_width="@dimen/admin_tab_dot_size"
+                    android:layout_height="@dimen/admin_tab_dot_size"
+                    android:background="@drawable/bg_dot_red"
+                    android:layout_marginEnd="@dimen/admin_section_gap" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expired"
+                    android:textSize="@dimen/admin_tab_text_size"
+                    android:textColor="#555555" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Active Batches Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/admin_padding"
+        android:paddingEnd="@dimen/admin_padding"
+        android:layout_marginBottom="@dimen/admin_section_margin_bottom">
+
+        <TextView
+            android:id="@+id/tvBatchCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ACTIVE BATCHES (12)"
+            android:textSize="@dimen/admin_batch_count_size"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:letterSpacing="0.05" />
+
+        <ImageView
+            android:layout_width="@dimen/admin_filter_icon_size"
+            android:layout_height="@dimen/admin_filter_icon_size"
+            android:src="@drawable/ic_filter"
+            app:tint="#888888" />
+
+    </LinearLayout>
+
+    <!-- Batches RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBatches"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/admin_rv_padding_h"
+        android:paddingEnd="@dimen/admin_rv_padding_h"
+        android:paddingBottom="@dimen/admin_rv_padding_bottom"
+        android:clipToPadding="false" />
+
+</LinearLayout>

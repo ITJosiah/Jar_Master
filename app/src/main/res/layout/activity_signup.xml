@@ -238,7 +238,7 @@
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_password"
+                android:hint="@string/hint_confirm_password"
                 android:inputType="textPassword"
                 android:textSize="@dimen/text_input"
                 android:fontFamily="@font/poppins_regular"
@@ -248,53 +248,6 @@
                 android:paddingBottom="@dimen/input_padding_vertical"
                 android:imeOptions="actionDone" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- ── User Role Label ── -->
-        <TextView
-            android:id="@+id/tvUserRoleLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:text="@string/label_user_role"
-            android:textSize="@dimen/text_label"
-            android:fontFamily="@font/poppins_regular"
-            android:textColor="@color/text_primary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword" />
-
-        <!-- ── Role Card: Admin ── -->
-        <include
-            android:id="@+id/cardAdmin"
-            layout="@layout/item_role_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_xsmall"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvUserRoleLabel" />
-
-        <!-- ── Role Card: Production Staff ── -->
-        <include
-            android:id="@+id/cardProduction"
-            layout="@layout/item_role_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardAdmin" />
-
-        <!-- ── Role Card: Sales Assistant ── -->
-        <include
-            android:id="@+id/cardSales"
-            layout="@layout/item_role_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardProduction" />
 
         <!-- ── Create Account Button ── -->
         <Button
@@ -311,18 +264,125 @@
             app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardSales" />
+            app:layout_constraintTop_toBottomOf="@id/tilConfirmPassword" />
+
+        <!-- ── OAuth Divider ── -->
+        <LinearLayout
+            android:id="@+id/llOAuthDivider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnCreateAccount">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/or_sign_up_with"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="@color/divider_color" />
+        </LinearLayout>
+
+        <!-- ── OAuth Buttons Row ── -->
+        <LinearLayout
+            android:id="@+id/llOAuthButtons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llOAuthDivider">
+
+            <!-- Google Button -->
+            <LinearLayout
+                android:id="@+id/btnGoogle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_oauth_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/continue_google"
+                    android:src="@drawable/ic_google" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/continue_google"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+
+            <!-- Facebook Button -->
+            <LinearLayout
+                android:id="@+id/btnFacebook"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_oauth_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/continue_facebook"
+                    android:src="@drawable/ic_facebook" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/continue_facebook"
+                    android:textColor="@color/facebook_blue"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- ── Already have account row ── -->
         <LinearLayout
             android:id="@+id/llLoginRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnCreateAccount">
+            app:layout_constraintTop_toBottomOf="@id/llOAuthButtons">
 
             <TextView
                 android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.example.aling_jar.actvities;
+package com.example.aling_jar.auth;
 
 import android.os.Bundle;
 

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/admin_padding">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="@dimen/admin_settings_title_size"
+            android:textStyle="bold"
+            android:textColor="#222222"
+            android:layout_marginBottom="@dimen/admin_settings_title_margin_bottom" />
+
+        <!-- Profile Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/admin_settings_card_margin_bottom"
+            app:cardCornerRadius="@dimen/admin_settings_card_corner"
+            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/admin_padding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgSettingsProfile"
+                    android:layout_width="@dimen/admin_settings_profile_size"
+                    android:layout_height="@dimen/admin_settings_profile_size"
+                    android:src="@drawable/ic_profile_placeholder" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/admin_settings_profile_margin_start">
+
+                    <TextView
+                        android:id="@+id/tvSettingsName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Admin Name"
+                        android:textSize="@dimen/admin_settings_name_size"
+                        android:textStyle="bold"
+                        android:textColor="#222222" />
+
+                    <TextView
+                        android:id="@+id/tvSettingsEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="admin@example.com"
+                        android:textSize="@dimen/admin_settings_email_size"
+                        android:textColor="#888888" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Admin"
+                        android:textSize="@dimen/admin_settings_badge_size"
+                        android:textColor="#4CAF50"
+                        android:background="@drawable/bg_badge_green"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- App Info Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/admin_settings_card_margin_bottom"
+            app:cardCornerRadius="@dimen/admin_settings_card_corner"
+            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/admin_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="App Version"
+                    android:textSize="@dimen/admin_settings_version_label_size"
+                    android:textColor="#888888"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aling v1.0"
+                    android:textSize="@dimen/admin_settings_version_size"
+                    android:textColor="#222222"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Logout Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/admin_logout_height"
+            android:text="Sign Out"
+            android:textSize="@dimen/admin_logout_text_size"
+            android:textColor="#DC2626"
+            android:textAllCaps="false"
+            app:backgroundTint="#FEF2F2"
+            app:cornerRadius="@dimen/admin_logout_corner"
+            app:icon="@drawable/ic_back"
+            app:iconTint="#DC2626"
+            app:iconGravity="textStart"
+            android:layout_marginBottom="@dimen/admin_logout_margin_bottom" />
+
+    </LinearLayout>
+</ScrollView>

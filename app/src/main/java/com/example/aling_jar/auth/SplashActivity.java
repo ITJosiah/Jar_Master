@@ -1,4 +1,4 @@
-package com.example.aling_jar.actvities;
+package com.example.aling_jar.auth;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -49,6 +49,8 @@ public class SplashActivity extends AppCompatActivity {
         startEntranceAnimations();
         startProgressAnimation();
         scheduleNavigation();
+
+
     }
 
     private void initViews() {

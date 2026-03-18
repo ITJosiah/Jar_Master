@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Aling_Jar">
 
         <activity
-            android:name=".actvities.SplashActivity"
+            android:name=".auth.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Aling.Splash">
@@ -26,34 +26,64 @@
         </activity>
 
         <activity
-            android:name=".actvities.LoginActivity"
+            android:name=".auth.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".actvities.MainActivity"
+            android:name=".auth.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".admin.AdminActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
 
         <activity
-            android:name=".actvities.SignupActivity"
+            android:name=".auth.SignupActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".actvities.EmailVerificationActivity"
+            android:name=".auth.EmailVerificationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".actvities.SignupSuccessActivity"
+            android:name=".auth.SignupSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+
+        <!-- Facebook SDK -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:replace="android:theme" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
 
     </application>
 

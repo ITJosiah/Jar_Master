@@ -1,4 +1,4 @@
-package com.example.aling_jar.actvities;
+package com.example.aling_jar.auth;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,7 +33,9 @@ public class EmailVerificationActivity extends AppCompatActivity {
     private TextView tvResendCode, tvVerifyDesc;
     private ImageView ivBack;
 
-    private String email, fullName, password, role;
+    private static final String DEFAULT_ROLE = "User";
+
+    private String email, fullName, password;
     private String generatedCode;
 
     private FirebaseAuth mAuth;
@@ -60,7 +62,6 @@ public class EmailVerificationActivity extends AppCompatActivity {
         email    = getIntent().getStringExtra("email");
         fullName = getIntent().getStringExtra("fullName");
         password = getIntent().getStringExtra("password");
-        role     = getIntent().getStringExtra("role");
 
         initViews();
         setupDescription();
@@ -233,7 +234,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
         Map<String, Object> userData = new HashMap<>();
         userData.put("fullName", fullName);
         userData.put("email", email);
-        userData.put("role", role);
+        userData.put("role", DEFAULT_ROLE);
         userData.put("createdAt", System.currentTimeMillis());
 
         db.collection("users").document(uid)
@@ -250,7 +251,6 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
                     // Navigate to success screen
                     Intent intent = new Intent(EmailVerificationActivity.this, SignupSuccessActivity.class);
-                    intent.putExtra("role", role);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

@@ -1,4 +1,4 @@
-package com.example.aling_jar.actvities;
+package com.example.aling_jar.auth;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +16,6 @@ public class SignupSuccessActivity extends AppCompatActivity {
 
     private Button btnGetStarted;
     private TextView tvGoToDashboard;
-    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class SignupSuccessActivity extends AppCompatActivity {
                         View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         );
 
-        role = getIntent().getStringExtra("role");
+
 
         initViews();
         setClickListeners();
@@ -55,7 +54,6 @@ public class SignupSuccessActivity extends AppCompatActivity {
         // "Go to Dashboard" → go to MainActivity with the user's role
         tvGoToDashboard.setOnClickListener(v -> {
             Intent intent = new Intent(SignupSuccessActivity.this, MainActivity.class);
-            intent.putExtra("role", role);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

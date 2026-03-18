@@ -13,4 +13,9 @@
     <color name="text_hint">#94A3B8</color>
     <color name="light_green">#E8F8EE</color>
 
+    <!-- OAuth -->
+    <color name="divider_color">#E2E8F0</color>
+    <color name="oauth_btn_stroke">#E0E0E0</color>
+    <color name="facebook_blue">#1877F2</color>
+
 </resources>

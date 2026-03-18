@@ -13,7 +13,20 @@
           "package_name": "com.example.aling_jar"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "764723440527-9tpnbs4esupd64u3626kiugpmak2hl01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aling_jar",
+            "certificate_hash": "48488197193ddb9a927d1c8e21d9b3363164ad0c"
+          }
+        },
+        {
+          "client_id": "764723440527-gsosqok3s6mj6uldcol866t5dgrfcdir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCVuAxqbqSHlQbzle2-yn3XssOBLVWnIv8"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "764723440527-gsosqok3s6mj6uldcol866t5dgrfcdir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
