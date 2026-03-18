@@ -4,21 +4,21 @@
     <item
         android:id="@+id/nav_overview"
         android:icon="@drawable/ic_overview"
-        android:title="OVERVIEW" />
+        android:title="Overview" />
 
     <item
         android:id="@+id/nav_inventory"
         android:icon="@drawable/ic_inventory"
-        android:title="INVENTORY" />
+        android:title="Inventory" />
 
     <item
         android:id="@+id/nav_orders"
         android:icon="@drawable/ic_orders"
-        android:title="ORDERS" />
+        android:title="Orders" />
 
     <item
         android:id="@+id/nav_settings"
         android:icon="@drawable/ic_settings"
-        android:title="SETTINGS" />
+        android:title="Settings" />
 
 </menu>

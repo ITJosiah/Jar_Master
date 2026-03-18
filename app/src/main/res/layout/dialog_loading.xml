@@ -20,7 +20,7 @@
         android:layout_marginStart="20dp"
         android:text="Please wait…"
         android:textSize="15sp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/inter_regular"
         android:textColor="@color/text_primary" />
 
 </LinearLayout>

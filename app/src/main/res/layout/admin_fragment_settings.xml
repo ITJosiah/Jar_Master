@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/admin_settings_card_margin_bottom"
             app:cardCornerRadius="@dimen/admin_settings_card_corner"
-            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardElevation="0dp"
             app:cardBackgroundColor="@color/white">
 
             <LinearLayout
@@ -93,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/admin_settings_card_margin_bottom"
             app:cardCornerRadius="@dimen/admin_settings_card_corner"
-            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardElevation="0dp"
             app:cardBackgroundColor="@color/white">
 
             <LinearLayout
@@ -121,12 +123,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Spacer -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <!-- Logout Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
@@ -144,4 +140,4 @@
             android:layout_marginBottom="@dimen/admin_logout_margin_bottom" />
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.aling_jar.R;
@@ -26,6 +30,8 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         // Light status bar with white/light background
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         getWindow().getDecorView().setSystemUiVisibility(
@@ -33,6 +39,24 @@ public class AdminActivity extends AppCompatActivity {
         );
 
         bottomNav = findViewById(R.id.bottomNavigationView);
+        View root = findViewById(R.id.adminRoot);
+
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            Insets sysBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+            // Push all fragment content below status bar.
+            v.setPadding(sysBars.left, sysBars.top, sysBars.right, 0);
+
+            // Ensure bottom nav isn't covered by gesture/nav bar.
+            bottomNav.setPadding(
+                    bottomNav.getPaddingLeft(),
+                    bottomNav.getPaddingTop(),
+                    bottomNav.getPaddingRight(),
+                    sysBars.bottom
+            );
+
+            return insets;
+        });
 
         // Load default fragment
         activeFragment = dashboardFragment;
@@ -55,7 +79,6 @@ public class AdminActivity extends AppCompatActivity {
                 switchFragment(ordersFragment);
             } else if (id == R.id.nav_settings) {
                 switchFragment(settingsFragment);
-                return false;
             }
             return true;
         });

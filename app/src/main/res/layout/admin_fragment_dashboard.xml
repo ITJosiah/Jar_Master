@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:paddingBottom="96dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,7 +88,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/admin_card_gap"
                     app:cardCornerRadius="@dimen/admin_card_corner"
-                    app:cardElevation="@dimen/admin_card_elevation"
+                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -131,7 +132,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="@dimen/admin_card_gap"
                     app:cardCornerRadius="@dimen/admin_card_corner"
-                    app:cardElevation="@dimen/admin_card_elevation"
+                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -174,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:cardCornerRadius="@dimen/admin_card_corner"
-                    app:cardElevation="@dimen/admin_card_elevation"
+                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -301,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:text="0 NEW"
                     android:textSize="@dimen/admin_section_badge_size"
-                    android:textColor="@color/white"
+                    android:textColor="#4CAF50"
                     android:background="@drawable/bg_badge_green"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
@@ -327,14 +328,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="25dp"
         android:contentDescription="Add New Batch"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="#4CAF50"
+        android:src="@drawable/ic_add_batches"
+        app:backgroundTint="@color/white"
         app:borderWidth="0dp"
-        app:elevation="8dp"
+        app:elevation="6dp"
         app:fabCustomSize="56dp"
         app:maxImageSize="24dp"
-        app:tint="@color/white" />
+        app:tint="#4CAF50" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

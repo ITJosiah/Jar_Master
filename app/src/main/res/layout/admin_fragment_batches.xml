@@ -36,7 +36,7 @@
             android:layout_width="@dimen/admin_topbar_add_size"
             android:layout_height="@dimen/admin_topbar_add_size"
             app:cardCornerRadius="8dp"
-            app:cardElevation="@dimen/admin_card_elevation"
+            app:cardElevation="0dp"
             app:cardBackgroundColor="#E8F5E9">
 
             <ImageView
@@ -59,7 +59,7 @@
         android:layout_marginEnd="@dimen/admin_padding"
         android:layout_marginBottom="@dimen/admin_tab_margin_bottom"
         app:cardCornerRadius="@dimen/admin_search_corner"
-        app:cardElevation="@dimen/admin_card_elevation"
+        app:cardElevation="0dp"
         app:cardBackgroundColor="@color/white">
 
         <LinearLayout
@@ -237,7 +237,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBatches"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingStart="@dimen/admin_rv_padding_h"
         android:paddingEnd="@dimen/admin_rv_padding_h"
         android:paddingBottom="@dimen/admin_rv_padding_bottom"

@@ -33,7 +33,7 @@
         android:alpha="0"
         android:text="@string/app_name_display"
         android:textSize="@dimen/splash_app_name_text_size"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/inter_semibold"
         android:textColor="@color/text_primary"
         app:layout_constraintBottom_toTopOf="@id/tvTagline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
         android:text="@string/tagline"
         android:textSize="@dimen/splash_tagline_text_size"
         android:letterSpacing="0.18"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/inter_regular"
         android:textColor="@color/text_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
                 android:text="@string/initializing_label"
                 android:textSize="@dimen/splash_progress_label_text_size"
                 android:letterSpacing="0.12"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/inter_regular"
                 android:textColor="@color/text_hint"
                 tools:text="INITIALIZING FRESHNESS..." />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="0%"
                 android:textSize="@dimen/splash_progress_percent_text_size"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/green_primary"
                 tools:text="30%" />
         </LinearLayout>

@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/verify_email"
             android:textSize="@dimen/text_button"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_primary"
             android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/ivBack"
@@ -63,7 +63,7 @@
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/check_your_email"
             android:textSize="@dimen/text_title"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_primary"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:text="@string/verification_code_sent"
             android:textSize="@dimen/text_subtitle"
-            android:fontFamily="@font/poppins_regular"
+            android:fontFamily="@font/inter_regular"
             android:textColor="@color/text_secondary"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="@dimen/verify_code_text_size"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/text_primary"
                 android:cursorVisible="false"
                 android:importantForAutofill="no" />
@@ -121,7 +121,7 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="@dimen/verify_code_text_size"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/text_primary"
                 android:cursorVisible="false"
                 android:importantForAutofill="no" />
@@ -136,7 +136,7 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="@dimen/verify_code_text_size"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/text_primary"
                 android:cursorVisible="false"
                 android:importantForAutofill="no" />
@@ -151,7 +151,7 @@
                 android:inputType="number"
                 android:maxLength="1"
                 android:textSize="@dimen/verify_code_text_size"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/text_primary"
                 android:cursorVisible="false"
                 android:importantForAutofill="no" />
@@ -165,7 +165,7 @@
             android:layout_marginTop="@dimen/margin_large"
             android:text="@string/verify"
             android:textSize="@dimen/text_button"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@font/inter_semibold"
             android:textColor="@color/white"
             android:backgroundTint="@color/green_primary"
             android:stateListAnimator="@null"
@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/resend_code_prompt"
                 android:textSize="@dimen/text_small"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/inter_regular"
                 android:textColor="@color/text_secondary" />
 
             <TextView
@@ -201,7 +201,7 @@
                 android:paddingStart="5dp"
                 android:text="@string/resend_code"
                 android:textSize="@dimen/text_small"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="@color/green_primary"
                 android:clickable="true"
                 android:focusable="true" />

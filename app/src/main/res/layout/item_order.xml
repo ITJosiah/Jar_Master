@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
+    android:layout_width="@dimen/admin_order_card_width"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/bg_order_card"
-    android:padding="14dp"
-    android:layout_marginEnd="12dp"
-    android:elevation="2dp">
+    android:padding="@dimen/admin_item_padding"
+    android:layout_marginEnd="@dimen/admin_order_card_margin_end"
+    android:elevation="0dp">
 
     <!-- Profile Row: Avatar + Name + Time -->
     <LinearLayout
@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="@dimen/admin_item_gap_large">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgCustomerAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="@dimen/admin_order_avatar_size"
+            android:layout_height="@dimen/admin_order_avatar_size"
             android:src="@drawable/ic_profile_placeholder"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="@dimen/admin_order_avatar_margin_end" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,9 +34,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Maria Santos"
-                android:textSize="14sp"
+                android:textSize="@dimen/admin_item_customer_name_size"
                 android:textStyle="bold"
                 android:textColor="#222222"
+                android:fontFamily="@font/inter_semibold"
                 android:maxLines="1"
                 android:ellipsize="end" />
 
@@ -45,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 mins ago"
-                android:textSize="11sp"
+                android:textSize="@dimen/admin_item_time_size"
                 android:textColor="#4CAF50" />
 
         </LinearLayout>
@@ -58,9 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3x Spicy Laing (250g)"
-        android:textSize="13sp"
+        android:textSize="@dimen/admin_item_detail_size"
         android:textColor="#555555"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="@dimen/admin_item_gap_small"
         android:maxLines="2"
         android:ellipsize="end" />
 
@@ -70,10 +71,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="₱540.00"
-        android:textSize="16sp"
+        android:textSize="@dimen/admin_item_total_size"
         android:textStyle="bold"
+        android:fontFamily="@font/inter_bold"
         android:textColor="#222222"
-        android:layout_marginBottom="14dp" />
+        android:layout_marginBottom="@dimen/admin_item_gap_large" />
 
     <!-- Action Buttons: Decline + Confirm -->
     <LinearLayout
@@ -85,25 +87,27 @@
         <TextView
             android:id="@+id/btnDecline"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/admin_order_button_height"
             android:layout_weight="1"
             android:text="Decline"
-            android:textSize="12sp"
+            android:textSize="@dimen/admin_item_button_text_size"
             android:textColor="#555555"
             android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
             android:gravity="center"
             android:background="@drawable/bg_btn_decline"
-            android:layout_marginEnd="6dp" />
+            android:layout_marginEnd="@dimen/admin_item_button_gap" />
 
         <TextView
             android:id="@+id/btnConfirm"
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/admin_order_button_height"
             android:layout_weight="1"
             android:text="Confirm"
-            android:textSize="12sp"
+            android:textSize="@dimen/admin_item_button_text_size"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:fontFamily="@font/inter_semibold"
             android:gravity="center"
             android:background="@drawable/bg_btn_confirm" />
 

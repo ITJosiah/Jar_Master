@@ -5,36 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="@dimen/admin_dialog_padding">
 
     <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log New Batch"
-        android:textSize="20sp"
+        android:textSize="@dimen/admin_dialog_title_size"
         android:textStyle="bold"
+        android:fontFamily="@font/inter_semibold"
         android:textColor="#222222"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="@dimen/admin_dialog_title_gap" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add a new product batch to inventory"
-        android:textSize="13sp"
+        android:textSize="@dimen/admin_dialog_subtitle_size"
         android:textColor="#888888"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="@dimen/admin_dialog_subtitle_margin_bottom" />
 
     <!-- Batch Name -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilBatchName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
+        android:layout_marginBottom="@dimen/admin_dialog_field_margin_bottom"
+        app:boxCornerRadiusTopStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusTopEnd="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomEnd="@dimen/admin_dialog_field_corner"
         android:hint="Product Name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -42,7 +43,7 @@
             android:id="@+id/etBatchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/admin_dialog_input_size"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -52,11 +53,11 @@
         android:id="@+id/tilQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
+        android:layout_marginBottom="@dimen/admin_dialog_field_margin_bottom"
+        app:boxCornerRadiusTopStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusTopEnd="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomEnd="@dimen/admin_dialog_field_corner"
         android:hint="Quantity (units)"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -64,7 +65,7 @@
             android:id="@+id/etQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/admin_dialog_input_size"
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,11 +75,11 @@
         android:id="@+id/tilExpiryDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
+        android:layout_marginBottom="@dimen/admin_dialog_field_margin_bottom"
+        app:boxCornerRadiusTopStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusTopEnd="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomStart="@dimen/admin_dialog_field_corner"
+        app:boxCornerRadiusBottomEnd="@dimen/admin_dialog_field_corner"
         android:hint="Expiry Date"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_calendar"
@@ -88,7 +89,7 @@
             android:id="@+id/etExpiryDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/admin_dialog_input_size"
             android:inputType="none"
             android:focusable="false"
             android:clickable="true" />
@@ -100,17 +101,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Status"
-        android:textSize="12sp"
+        android:textSize="@dimen/admin_dialog_label_size"
         android:textColor="#888888"
-        android:layout_marginBottom="6dp" />
+        android:layout_marginBottom="@dimen/admin_dialog_label_margin_bottom" />
 
     <Spinner
         android:id="@+id/spinnerStatus"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/admin_dialog_spinner_height"
         android:background="@drawable/bg_tab_inactive"
-        android:padding="10dp"
-        android:layout_marginBottom="20dp" />
+        android:padding="@dimen/admin_dialog_spinner_padding"
+        android:layout_marginBottom="@dimen/admin_dialog_subtitle_margin_bottom" />
 
     <!-- Buttons -->
     <LinearLayout
@@ -121,27 +122,27 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/admin_dialog_button_height"
             android:layout_weight="1"
             android:text="Cancel"
-            android:textSize="14sp"
+            android:textSize="@dimen/admin_dialog_input_size"
             android:textColor="#555555"
             android:textAllCaps="false"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/admin_dialog_button_gap"
             app:backgroundTint="#F5F5F5"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="@dimen/admin_dialog_field_corner" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveBatch"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/admin_dialog_button_height"
             android:layout_weight="1"
             android:text="Save Batch"
-            android:textSize="14sp"
+            android:textSize="@dimen/admin_dialog_input_size"
             android:textColor="@color/white"
             android:textAllCaps="false"
             app:backgroundTint="#4CAF50"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="@dimen/admin_dialog_field_corner" />
 
     </LinearLayout>
 

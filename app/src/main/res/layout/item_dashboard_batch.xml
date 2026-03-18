@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/bg_batch_border_green"
-    android:layout_marginBottom="10dp"
-    android:elevation="2dp"
-    android:padding="14dp">
+    android:layout_marginBottom="@dimen/admin_dashboard_batch_margin_bottom"
+    android:elevation="0dp"
+    android:padding="@dimen/admin_item_padding">
 
     <!-- Top Row: Batch ID + Supplier • Status Badge -->
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="2dp">
+        android:layout_marginBottom="@dimen/admin_dashboard_batch_row_gap">
 
         <TextView
             android:id="@+id/tvBatchIdSupplier"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="#8821 • Laing"
-            android:textSize="12sp"
+            android:textSize="@dimen/admin_item_detail_size"
             android:textColor="#888888" />
 
         <TextView
@@ -32,8 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FRESH"
-            android:textSize="10sp"
+            android:textSize="@dimen/admin_item_badge_size"
+            android:background="@drawable/bg_badge_green"
             android:textStyle="bold"
+            android:fontFamily="@font/inter_bold"
             android:textColor="#4CAF50" />
 
     </LinearLayout>
@@ -44,10 +46,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Spicy Flavor (250g)"
-        android:textSize="15sp"
+        android:textSize="@dimen/admin_item_product_name_size"
         android:textStyle="bold"
+        android:fontFamily="@font/inter_semibold"
         android:textColor="#222222"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="@dimen/admin_item_gap_small" />
 
     <!-- Bottom Row: Expiry Date + Edit/Delete Icons -->
     <LinearLayout
@@ -62,25 +65,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Exp: 20 Oct 2024"
-            android:textSize="11sp"
+            android:textSize="@dimen/admin_item_time_size"
             android:textColor="#999999" />
 
         <ImageView
             android:id="@+id/btnEdit"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="@dimen/admin_dashboard_batch_icon_size"
+            android:layout_height="@dimen/admin_dashboard_batch_icon_size"
             android:src="@drawable/ic_edit"
-            android:padding="4dp"
+            android:padding="@dimen/admin_dashboard_batch_icon_padding"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Edit"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="@dimen/admin_item_button_gap" />
 
         <ImageView
             android:id="@+id/btnDelete"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="@dimen/admin_dashboard_batch_icon_size"
+            android:layout_height="@dimen/admin_dashboard_batch_icon_size"
             android:src="@drawable/ic_delete"
-            android:padding="4dp"
+            android:padding="@dimen/admin_dashboard_batch_icon_padding"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Delete" />
 
