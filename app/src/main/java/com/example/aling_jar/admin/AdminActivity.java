@@ -23,6 +23,7 @@ public class AdminActivity extends AppCompatActivity {
     private final AdminBatchesFragment batchesFragment = new AdminBatchesFragment();
     private final AdminOrdersFragment ordersFragment = new AdminOrdersFragment();
     private final AdminSettingsFragment settingsFragment = new AdminSettingsFragment();
+    private final AdminLogNewBatchFragment logNewBatchFragment = new AdminLogNewBatchFragment();
     private Fragment activeFragment;
 
     @Override
@@ -82,15 +83,20 @@ public class AdminActivity extends AppCompatActivity {
             }
             return true;
         });
+
+        // Ensure bottom nav hides on full-screen flows
+        getSupportFragmentManager().addOnBackStackChangedListener(this::syncBottomNavVisibility);
     }
 
     private void switchFragment(Fragment target) {
         if (target == activeFragment) return;
+        getSupportFragmentManager().popBackStack(); // leave any full-screen flow
         getSupportFragmentManager().beginTransaction()
                 .hide(activeFragment)
                 .show(target)
                 .commit();
         activeFragment = target;
+        syncBottomNavVisibility();
     }
 
     /**
@@ -105,5 +111,20 @@ public class AdminActivity extends AppCompatActivity {
      */
     public void navigateToOrders() {
         bottomNav.setSelectedItemId(R.id.nav_orders);
+    }
+
+    public void openLogNewBatch() {
+        // Full-screen fragment on top of the current tab
+        bottomNav.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, logNewBatchFragment, "log_new_batch")
+                .addToBackStack("log_new_batch")
+                .commit();
+    }
+
+    private void syncBottomNavVisibility() {
+        Fragment top = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        boolean show = !(top instanceof AdminLogNewBatchFragment);
+        bottomNav.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

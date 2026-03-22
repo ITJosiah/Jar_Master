@@ -4,7 +4,9 @@ import com.google.firebase.Timestamp;
 
 public class Order {
     private String documentId;
+    private String orderId;
     private String customerName;
+    private String address;
     private String items;
     private double total;
     private String status;
@@ -25,6 +27,12 @@ public class Order {
     // Getters and setters
     public String getDocumentId() { return documentId; }
     public void setDocumentId(String documentId) { this.documentId = documentId; }
+
+    public String getOrderId() { return orderId; }
+    public void setOrderId(String orderId) { this.orderId = orderId; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
     public String getCustomerName() { return customerName; }
     public void setCustomerName(String customerName) { this.customerName = customerName; }

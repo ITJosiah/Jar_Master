@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_order_card"
+    android:padding="@dimen/admin_item_padding"
+    android:layout_marginBottom="@dimen/admin_item_card_margin_bottom"
+    android:elevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="top">
+
+        <!-- User icon container: mint (pending) or gray (processing) -->
+        <FrameLayout
+            android:id="@+id/containerAvatar"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_badge_green">
+
+            <ImageView
+                android:id="@+id/imgCustomer"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person"
+                android:contentDescription="Customer"
+                app:tint="#2E7D32" />
+        </FrameLayout>
+
+        <!-- Order details column -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alex Rivera"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#37474F"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/tvOrderMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order #8821 • 10:24 AM"
+                android:textSize="12sp"
+                android:textColor="#78909C"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address: Daet, Camarines Norte"
+                android:textSize="12sp"
+                android:textColor="#78909C"
+                android:layout_marginTop="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Price & item count / badge column -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/tvOrderTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱18.90"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50" />
+
+            <TextView
+                android:id="@+id/tvItemCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 items"
+                android:textSize="11sp"
+                android:textColor="#78909C"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PREPARING"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2"
+                android:background="@drawable/bg_badge_blue"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Action buttons (visible only for PENDING) -->
+    <LinearLayout
+        android:id="@+id/layoutActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/btnConfirm"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Confirm"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/bg_btn_confirm"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/btnDecline"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Decline"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#546E7A"
+            android:gravity="center"
+            android:background="@drawable/bg_btn_decline" />
+    </LinearLayout>
+</LinearLayout>

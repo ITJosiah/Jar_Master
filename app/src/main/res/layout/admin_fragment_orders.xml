@@ -7,156 +7,88 @@
     android:orientation="vertical"
     android:background="#F5F5F5">
 
-    <!-- Top Bar -->
+    <!-- Top App Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="@dimen/admin_padding">
+        android:padding="@dimen/admin_padding"
+        android:background="@color/white">
 
         <ImageView
-            android:layout_width="@dimen/admin_order_icon_size"
-            android:layout_height="@dimen/admin_order_icon_size"
+            android:id="@+id/btnMenu"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
             android:src="@drawable/ic_orders"
-            app:tint="#4CAF50"
-            android:layout_marginEnd="@dimen/admin_profile_margin_start"
-            android:contentDescription="Orders" />
+            android:background="@drawable/bg_badge_green"
+            android:contentDescription="Menu"
+            app:tint="#2E7D32"
+            android:layout_marginEnd="@dimen/admin_topbar_icon_gap_large" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Orders"
-            android:textSize="@dimen/admin_topbar_title_size"
+            android:textSize="@dimen/admin_topbar_title_large"
             android:textStyle="bold"
             android:textColor="#222222" />
 
-        <TextView
-            android:id="@+id/tvOrderCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 Orders"
-            android:textSize="@dimen/admin_order_count_size"
-            android:textColor="#888888" />
+        <ImageView
+            android:id="@+id/btnSearch"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_search"
+            android:background="@drawable/bg_badge_green"
+            android:contentDescription="Search"
+            app:tint="#2E7D32"
+            android:layout_marginEnd="@dimen/admin_topbar_icon_gap" />
 
+        <ImageView
+            android:id="@+id/btnNotification"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_notification"
+            android:background="@drawable/bg_badge_green"
+            android:contentDescription="Notifications"
+            app:tint="#2E7D32" />
     </LinearLayout>
 
-    <!-- Filter Tabs -->
-    <HorizontalScrollView
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/text_hint" />
+
+    <!-- TabLayout -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:layout_marginStart="@dimen/admin_padding"
-        android:layout_marginEnd="@dimen/admin_padding"
-        android:layout_marginBottom="@dimen/admin_tab_margin_bottom">
+        android:background="@color/white"
+        android:paddingTop="@dimen/admin_section_gap"
+        android:paddingBottom="@dimen/admin_dialog_title_gap"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabTextColor="#78909C"
+        app:tabSelectedTextColor="#4CAF50"
+        app:tabIndicatorColor="#4CAF50"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="@dimen/admin_item_gap_small"
+        app:tabRippleColor="@null"
+        app:tabTextAppearance="@style/CustomTabTextStyle" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tabAllOrders"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/admin_tab_height"
-                android:text="All Orders"
-                android:textSize="@dimen/admin_tab_text_size"
-                android:textColor="@color/white"
-                android:background="@drawable/bg_tab_active"
-                android:gravity="center"
-                android:paddingStart="@dimen/admin_tab_padding_h"
-                android:paddingEnd="@dimen/admin_tab_padding_h"
-                android:layout_marginEnd="@dimen/admin_tab_margin_end" />
-
-            <LinearLayout
-                android:id="@+id/tabPending"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/admin_tab_height"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/bg_tab_inactive"
-                android:paddingStart="@dimen/admin_tab_inner_padding_h"
-                android:paddingEnd="@dimen/admin_tab_inner_padding_h"
-                android:layout_marginEnd="@dimen/admin_tab_margin_end">
-
-                <View
-                    android:layout_width="@dimen/admin_tab_dot_size"
-                    android:layout_height="@dimen/admin_tab_dot_size"
-                    android:background="@drawable/bg_dot_orange"
-                    android:layout_marginEnd="@dimen/admin_section_gap" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pending"
-                    android:textSize="@dimen/admin_tab_text_size"
-                    android:textColor="#555555" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabConfirmed"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/admin_tab_height"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/bg_tab_inactive"
-                android:paddingStart="@dimen/admin_tab_inner_padding_h"
-                android:paddingEnd="@dimen/admin_tab_inner_padding_h"
-                android:layout_marginEnd="@dimen/admin_tab_margin_end">
-
-                <View
-                    android:layout_width="@dimen/admin_tab_dot_size"
-                    android:layout_height="@dimen/admin_tab_dot_size"
-                    android:background="@drawable/bg_dot_green"
-                    android:layout_marginEnd="@dimen/admin_section_gap" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Confirmed"
-                    android:textSize="@dimen/admin_tab_text_size"
-                    android:textColor="#555555" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/tabDeclined"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/admin_tab_height"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/bg_tab_inactive"
-                android:paddingStart="@dimen/admin_tab_inner_padding_h"
-                android:paddingEnd="@dimen/admin_tab_inner_padding_h">
-
-                <View
-                    android:layout_width="@dimen/admin_tab_dot_size"
-                    android:layout_height="@dimen/admin_tab_dot_size"
-                    android:background="@drawable/bg_dot_red"
-                    android:layout_marginEnd="@dimen/admin_section_gap" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Declined"
-                    android:textSize="@dimen/admin_tab_text_size"
-                    android:textColor="#555555" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- Orders RecyclerView -->
+    <!-- Orders list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/admin_rv_padding_h"
         android:paddingEnd="@dimen/admin_rv_padding_h"
+        android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/admin_rv_padding_bottom"
         android:clipToPadding="false" />
-
 </LinearLayout>

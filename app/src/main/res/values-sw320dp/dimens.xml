@@ -24,7 +24,7 @@
     <dimen name="admin_card_gap">20dp</dimen>
 
     <!-- ── Buttons ── -->
-    <dimen name="admin_button_height">55dp</dimen>
+    <dimen name="admin_button_height">65dp</dimen>
     <dimen name="admin_button_text_size">13sp</dimen>
     <dimen name="admin_button_corner">16dp</dimen>
 

@@ -165,7 +165,12 @@
 
     <!-- ── Top Bar ── -->
     <dimen name="admin_topbar_title_size">17sp</dimen>
+    <dimen name="admin_topbar_title_large">20sp</dimen>
     <dimen name="admin_topbar_icon_size">24dp</dimen>
+    <dimen name="admin_topbar_btn_size">40dp</dimen>
+    <dimen name="admin_topbar_btn_padding">10dp</dimen>
+    <dimen name="admin_topbar_icon_gap_large">12dp</dimen>
+    <dimen name="admin_topbar_icon_gap">8dp</dimen>
     <dimen name="admin_topbar_add_size">34dp</dimen>
     <dimen name="admin_topbar_add_icon_size">19dp</dimen>
 

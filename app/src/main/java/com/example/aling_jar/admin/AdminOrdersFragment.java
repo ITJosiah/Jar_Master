@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aling_jar.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -28,17 +28,13 @@ public class AdminOrdersFragment extends Fragment {
     private static final String TAG = "AdminOrders";
 
     private RecyclerView rvOrders;
-    private TextView tvOrderCount;
-    private OrderAdapter orderAdapter;
+    private TabLayout tabLayout;
+    private AdminOrdersAdapter orderAdapter;
     private List<Order> orderList = new ArrayList<>();
-    private List<Order> filteredList = new ArrayList<>();
 
     private FirebaseFirestore db;
     private ListenerRegistration orderListener;
-    private String currentFilter = "ALL";
-
-    // Filter tab views
-    private View tabAllOrders, tabPending, tabConfirmed, tabDeclined;
+    private int selectedTabIndex = 0; // 0=Pending, 1=Confirmed, 2=Delivery, 3=History
 
     @Nullable
     @Override
@@ -54,19 +50,36 @@ public class AdminOrdersFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         rvOrders = view.findViewById(R.id.rvOrders);
-        tvOrderCount = view.findViewById(R.id.tvOrderCount);
-        tabAllOrders = view.findViewById(R.id.tabAllOrders);
-        tabPending = view.findViewById(R.id.tabPending);
-        tabConfirmed = view.findViewById(R.id.tabConfirmed);
-        tabDeclined = view.findViewById(R.id.tabDeclined);
+        tabLayout = view.findViewById(R.id.tabLayout);
 
+        setupTabs();
         setupRecyclerView();
-        setupFilterTabs();
         startRealtimeListener();
     }
 
+    private void setupTabs() {
+        tabLayout.addTab(tabLayout.newTab().setText("Pending"));
+        tabLayout.addTab(tabLayout.newTab().setText("Confirmed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Delivery"));
+        tabLayout.addTab(tabLayout.newTab().setText("History"));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedTabIndex = tab.getPosition();
+                buildAndUpdateDisplayList();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) { }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { }
+        });
+    }
+
     private void setupRecyclerView() {
-        orderAdapter = new OrderAdapter(filteredList, new OrderAdapter.OnOrderActionListener() {
+        orderAdapter = new AdminOrdersAdapter(new AdminOrdersAdapter.OnOrderActionListener() {
             @Override
             public void onConfirmClick(Order order, int position) {
                 updateOrderStatus(order, "CONFIRMED");
@@ -81,34 +94,76 @@ public class AdminOrdersFragment extends Fragment {
         rvOrders.setAdapter(orderAdapter);
     }
 
-    private void setupFilterTabs() {
-        tabAllOrders.setOnClickListener(v -> applyFilter("ALL"));
-        tabPending.setOnClickListener(v -> applyFilter("PENDING"));
-        tabConfirmed.setOnClickListener(v -> applyFilter("CONFIRMED"));
-        tabDeclined.setOnClickListener(v -> applyFilter("DECLINED"));
-    }
+    private void buildAndUpdateDisplayList() {
+        List<Object> displayList = new ArrayList<>();
 
-    private void applyFilter(String filter) {
-        currentFilter = filter;
+        List<Order> pending = new ArrayList<>();
+        List<Order> processing = new ArrayList<>();
 
-        // Update tab styles
-        tabAllOrders.setBackgroundResource(
-                "ALL".equals(filter) ? R.drawable.bg_tab_active : R.drawable.bg_tab_inactive);
-        if (tabAllOrders instanceof TextView) {
-            ((TextView) tabAllOrders).setTextColor(
-                    "ALL".equals(filter) ? 0xFFFFFFFF : 0xFF555555);
-        }
-
-        // Filter the list
-        filteredList.clear();
-        for (Order order : orderList) {
-            if ("ALL".equals(filter) || filter.equalsIgnoreCase(order.getStatus())) {
-                filteredList.add(order);
+        for (Order o : orderList) {
+            String status = o.getStatus() != null ? o.getStatus().toUpperCase() : "";
+            switch (selectedTabIndex) {
+                case 0: // Pending tab: NEW ORDERS (PENDING) + PROCESSING (CONFIRMED)
+                    if ("PENDING".equals(status)) {
+                        pending.add(o);
+                    } else if ("CONFIRMED".equals(status) || "PREPARING".equals(status)) {
+                        processing.add(o);
+                    }
+                    break;
+                case 1: // Confirmed: CONFIRMED only
+                    if ("CONFIRMED".equals(status) || "PREPARING".equals(status)) {
+                        processing.add(o);
+                    }
+                    break;
+                case 2: // Delivery: DELIVERY, PREPARING, etc.
+                    if ("DELIVERY".equals(status) || "DELIVERING".equals(status) || "PREPARING".equals(status) || "CONFIRMED".equals(status)) {
+                        processing.add(o);
+                    }
+                    break;
+                case 3: // History: DECLINED, DELIVERED, CANCELLED
+                    if ("DECLINED".equals(status) || "DELIVERED".equals(status) || "CANCELLED".equals(status)) {
+                        processing.add(o); // show as card without actions
+                    }
+                    break;
             }
         }
 
-        orderAdapter.updateList(filteredList);
-        tvOrderCount.setText(filteredList.size() + " Orders");
+        if (selectedTabIndex == 0) {
+            if (!pending.isEmpty()) {
+                displayList.add(new AdminOrdersAdapter.SectionHeader(
+                        "NEW ORDERS (" + pending.size() + ")",
+                        "Today",
+                        true));
+                for (Order o : pending) {
+                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, false));
+                }
+            }
+            if (!processing.isEmpty()) {
+                displayList.add(new AdminOrdersAdapter.SectionHeader(
+                        "PROCESSING (" + processing.size() + ")",
+                        "",
+                        false));
+                for (Order o : processing) {
+                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, true));
+                }
+            }
+        } else {
+            String sectionTitle = selectedTabIndex == 1 ? "CONFIRMED"
+                    : selectedTabIndex == 2 ? "DELIVERY"
+                    : "HISTORY";
+            if (!processing.isEmpty()) {
+                displayList.add(new AdminOrdersAdapter.SectionHeader(
+                        sectionTitle + " (" + processing.size() + ")",
+                        "",
+                        false));
+                for (Order o : processing) {
+                    boolean showAsProcessing = selectedTabIndex != 0;
+                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, showAsProcessing));
+                }
+            }
+        }
+
+        orderAdapter.setItems(displayList);
     }
 
     private void startRealtimeListener() {
@@ -125,10 +180,15 @@ public class AdminOrdersFragment extends Fragment {
                             Order order = doc.toObject(Order.class);
                             if (order != null) {
                                 order.setDocumentId(doc.getId());
+                                if (order.getOrderId() == null) {
+                                    order.setOrderId(doc.getId().length() >= 4
+                                            ? doc.getId().substring(doc.getId().length() - 4)
+                                            : doc.getId());
+                                }
                                 orderList.add(order);
                             }
                         }
-                        applyFilter(currentFilter);
+                        buildAndUpdateDisplayList();
                     }
                 });
     }

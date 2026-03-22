@@ -1,13 +1,10 @@
 package com.example.aling_jar.admin;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +18,6 @@ import com.example.aling_jar.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,13 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class AdminDashboardFragment extends Fragment {
 
@@ -51,6 +42,7 @@ public class AdminDashboardFragment extends Fragment {
     private MaterialButton btnLogNewBatch;
     private View btnNotification;
     private FloatingActionButton fabAdd;
+    private androidx.core.widget.NestedScrollView scrollDashboard;
 
     // Firebase
     private FirebaseFirestore db;
@@ -101,6 +93,7 @@ public class AdminDashboardFragment extends Fragment {
         btnLogNewBatch = view.findViewById(R.id.btnLogNewBatch);
         btnNotification = view.findViewById(R.id.btnNotification);
         fabAdd = view.findViewById(R.id.fabAdd);
+        scrollDashboard = view.findViewById(R.id.scrollDashboard);
     }
 
     private void setupRecyclerViews() {
@@ -150,10 +143,18 @@ public class AdminDashboardFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        btnLogNewBatch.setOnClickListener(v -> showNewBatchDialog());
+        btnLogNewBatch.setOnClickListener(v -> {
+            if (getActivity() instanceof AdminActivity) {
+                ((AdminActivity) getActivity()).openLogNewBatch();
+            }
+        });
 
-        // FAB also opens the new batch dialog
-        fabAdd.setOnClickListener(v -> showNewBatchDialog());
+        // FAB also opens the full-screen log batch form
+        fabAdd.setOnClickListener(v -> {
+            if (getActivity() instanceof AdminActivity) {
+                ((AdminActivity) getActivity()).openLogNewBatch();
+            }
+        });
 
         // View All Batches — navigate to Batches tab
         View tvViewAllBatches = requireView().findViewById(R.id.tvViewAllBatches);
@@ -320,98 +321,6 @@ public class AdminDashboardFragment extends Fragment {
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
-    }
-
-    private void showNewBatchDialog() {
-        View dialogView = LayoutInflater.from(getContext())
-                .inflate(R.layout.dialog_new_batch, null);
-
-        TextInputEditText etBatchName = dialogView.findViewById(R.id.etBatchName);
-        TextInputEditText etQuantity = dialogView.findViewById(R.id.etQuantity);
-        TextInputEditText etExpiryDate = dialogView.findViewById(R.id.etExpiryDate);
-        Spinner spinnerStatus = dialogView.findViewById(R.id.spinnerStatus);
-        MaterialButton btnCancel = dialogView.findViewById(R.id.btnCancel);
-        MaterialButton btnSave = dialogView.findViewById(R.id.btnSaveBatch);
-
-        // Status spinner
-        String[] statuses = {"FRESH", "SELLING FAST", "CRITICAL"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_spinner_dropdown_item, statuses);
-        spinnerStatus.setAdapter(adapter);
-
-        // Date picker
-        final Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
-
-        etExpiryDate.setOnClickListener(v -> {
-            DatePickerDialog picker = new DatePickerDialog(requireContext(),
-                    (view, year, month, dayOfMonth) -> {
-                        calendar.set(year, month, dayOfMonth);
-                        etExpiryDate.setText(dateFormat.format(calendar.getTime()));
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH));
-            picker.show();
-        });
-
-        // Build dialog
-        androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
-                .setView(dialogView)
-                .create();
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_dialog_rounded);
-        }
-
-        btnCancel.setOnClickListener(v -> dialog.dismiss());
-
-        btnSave.setOnClickListener(v -> {
-            String name = etBatchName.getText() != null ?
-                    etBatchName.getText().toString().trim() : "";
-            String qtyStr = etQuantity.getText() != null ?
-                    etQuantity.getText().toString().trim() : "";
-
-            if (name.isEmpty()) {
-                etBatchName.setError("Required");
-                return;
-            }
-            if (qtyStr.isEmpty()) {
-                etQuantity.setError("Required");
-                return;
-            }
-
-            long quantity = Long.parseLong(qtyStr);
-            String status = spinnerStatus.getSelectedItem().toString();
-            Timestamp expiryTimestamp = new Timestamp(calendar.getTime());
-            Timestamp nowTimestamp = Timestamp.now();
-
-            Map<String, Object> batchData = new HashMap<>();
-            batchData.put("name", name);
-            batchData.put("quantity", quantity);
-            batchData.put("status", status);
-            batchData.put("expiryDate", expiryTimestamp);
-            batchData.put("createdAt", nowTimestamp);
-
-            btnSave.setEnabled(false);
-            btnSave.setText("Saving…");
-
-            db.collection("batches")
-                    .add(batchData)
-                    .addOnSuccessListener(docRef -> {
-                        Toast.makeText(getContext(), "Batch logged successfully!",
-                                Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    })
-                    .addOnFailureListener(e -> {
-                        btnSave.setEnabled(true);
-                        btnSave.setText("Save Batch");
-                        Toast.makeText(getContext(), "Failed to save batch",
-                                Toast.LENGTH_SHORT).show();
-                    });
-        });
-
-        dialog.show();
     }
 
     @Override
