@@ -1,79 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#F5F5F5">
+
+    <!-- Top App Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/admin_padding"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_overview"
+            android:background="@drawable/bg_badge_green"
+            android:contentDescription="Menu"
+            app:tint="#2E7D32"
+            android:layout_marginEnd="@dimen/admin_topbar_icon_gap_large" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Overview"
+            android:textSize="@dimen/admin_topbar_title_large"
+            android:textStyle="bold"
+            android:textColor="#222222" />
+
+        <ImageView
+            android:id="@+id/btnNotification"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_notification"
+            android:background="@drawable/bg_badge_green"
+            android:contentDescription="Notifications"
+            app:tint="#2E7D32" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/text_hint" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollDashboard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingBottom="96dp">
+        android:paddingBottom="@dimen/admin_nav_content_margin_bottom">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/admin_padding">
-
-            <!-- Header -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="@dimen/admin_section_margin_top">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="@dimen/admin_profile_size"
-                    android:layout_height="@dimen/admin_profile_size"
-                    android:src="@drawable/ic_profile_placeholder" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/admin_profile_margin_start">
-
-                    <TextView
-                        android:id="@+id/tvAdminName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Aling Admin"
-                        android:textSize="@dimen/admin_profile_name_size"
-                        android:textStyle="bold"
-                        android:textColor="#222222" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Store Owner"
-                        android:textSize="@dimen/admin_profile_role_size"
-                        android:textColor="#888888" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="@dimen/admin_notification_size"
-                    android:layout_height="@dimen/admin_notification_size"
-                    android:src="@drawable/ic_search"
-                    android:contentDescription="Search"
-                    android:layout_marginEnd="12dp" />
-
-                <ImageView
-                    android:id="@+id/btnNotification"
-                    android:layout_width="@dimen/admin_notification_size"
-                    android:layout_height="@dimen/admin_notification_size"
-                    android:src="@drawable/ic_notification"
-                    android:contentDescription="Notifications" />
-
-            </LinearLayout>
 
             <!-- Summary Cards: Stock, Orders, Alerts -->
             <LinearLayout
@@ -215,6 +206,124 @@
 
             </LinearLayout>
 
+            <!-- Per-Product Summary Cards: Laing & Sinantol -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/admin_section_margin_top">
+
+                <!-- Laing Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/admin_card_gap"
+                    app:cardCornerRadius="@dimen/admin_card_corner"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/admin_card_padding">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="LAING"
+                                android:textSize="@dimen/admin_card_label_size"
+                                android:textColor="#888888"
+                                android:textAllCaps="true"
+                                android:letterSpacing="0.05" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvLaingStock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="@dimen/admin_card_value_size"
+                            android:textStyle="bold"
+                            android:textColor="#222222" />
+
+                        <TextView
+                            android:id="@+id/tvLaingBatches"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- Active Batches"
+                            android:textSize="@dimen/admin_card_change_size"
+                            android:textColor="#888888" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Sinantol Card -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="@dimen/admin_card_corner"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/admin_card_padding">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SINANTOL"
+                                android:textSize="@dimen/admin_card_label_size"
+                                android:textColor="#888888"
+                                android:textAllCaps="true"
+                                android:letterSpacing="0.05" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvSinantolStock"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--"
+                            android:textSize="@dimen/admin_card_value_size"
+                            android:textStyle="bold"
+                            android:textColor="#222222" />
+
+                        <TextView
+                            android:id="@+id/tvSinantolBatches"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-- Active Batches"
+                            android:textSize="@dimen/admin_card_change_size"
+                            android:textColor="#888888" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+
             <!-- Log New Batch Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogNewBatch"
@@ -227,6 +336,41 @@
                 android:textAllCaps="false"
                 app:backgroundTint="#4CAF50"
                 app:cornerRadius="@dimen/admin_button_corner" />
+
+            <!-- Stock by Variation Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="@dimen/admin_section_icon_size"
+                    android:layout_height="@dimen/admin_section_icon_size"
+                    android:src="@drawable/ic_batches"
+                    app:tint="#888888"
+                    android:contentDescription="Variations" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/admin_section_gap"
+                    android:text="Stock by Variation"
+                    android:textSize="@dimen/admin_section_title_size"
+                    android:textStyle="bold"
+                    android:textColor="#222222" />
+
+            </LinearLayout>
+
+            <!-- Stock By Variation RecyclerView (HORIZONTAL) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvVariationsStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/admin_section_margin_top"
+                android:clipToPadding="false" />
 
             <!-- Recent Batches Header -->
             <LinearLayout
@@ -248,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="@dimen/admin_section_gap"
-                    android:text="Recent Batches (FIFO)"
+                    android:text="Recent Batches"
                     android:textSize="@dimen/admin_section_title_size"
                     android:textStyle="bold"
                     android:textColor="#222222" />
@@ -323,21 +467,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- FAB - Add New Batch -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="25dp"
-        android:contentDescription="Add New Batch"
-        android:src="@drawable/ic_add_batches"
-        app:backgroundTint="@color/white"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabCustomSize="56dp"
-        app:maxImageSize="24dp"
-        app:tint="#4CAF50" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

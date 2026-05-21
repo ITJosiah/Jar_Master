@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User bottom nav: rounded tray with pill-style active indicator (no FAB) -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userBottomNavRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="@dimen/admin_nav_bar_margin_h"
+    android:paddingEnd="@dimen/admin_nav_bar_margin_h"
+    android:paddingBottom="@dimen/admin_nav_bar_margin_bottom">
+
+    <!-- Nav tray: holds the 4 tab items (full-width, no FAB) -->
+    <LinearLayout
+        android:id="@+id/navTrayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/admin_nav_tray_height"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_nav_tray"
+        android:paddingStart="@dimen/admin_nav_tray_padding_h"
+        android:paddingEnd="@dimen/admin_nav_tray_padding_h"
+        android:paddingTop="@dimen/admin_nav_tray_padding_v"
+        android:paddingBottom="@dimen/admin_nav_tray_padding_v"
+        android:gravity="center_vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- Nav items are added programmatically here -->
+
+    </LinearLayout>
+
+</FrameLayout>

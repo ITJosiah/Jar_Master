@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_bg"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="2dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarEditAccount"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Edit Account Info"
+            app:titleTextColor="@color/text_primary"
+            app:navigationIcon="@drawable/ic_back_arrow" />
+            
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <!-- ── Full Name Label ── -->
+            <TextView
+                android:id="@+id/tvFullNameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Full Name"
+                android:textSize="@dimen/text_label"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- ── Full Name Input ── -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilFullName"
+                style="@style/LoginInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:startIconDrawable="@drawable/ic_person"
+                app:boxStrokeColor="@color/input_stroke_selector"
+                app:startIconTint="@color/text_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvFullNameLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Josiah Luke"
+                    android:inputType="textPersonName|textCapWords"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── Email Label ── -->
+            <TextView
+                android:id="@+id/tvEmailLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Email Address (Read-only)"
+                android:textSize="@dimen/text_label"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilFullName" />
+
+            <!-- ── Email Input ── -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                style="@style/LoginInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/input_stroke_selector"
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/text_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEmailLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="josiah@example.com"
+                    android:inputType="textEmailAddress"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_hint"
+                    android:textColorHint="@color/text_hint"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:focusable="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── Mobile Number Label ── -->
+            <TextView
+                android:id="@+id/tvMobileLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Mobile Number"
+                android:textSize="@dimen/text_label"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilEmail" />
+
+            <!-- ── Mobile Number Input ── -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilMobileNumber"
+                style="@style/LoginInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/input_stroke_selector"
+                app:startIconDrawable="@android:drawable/ic_menu_call"
+                app:startIconTint="@color/text_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMobileLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="e.g. 09123456789"
+                    android:inputType="phone"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- ── Delivery Address Label ── -->
+            <TextView
+                android:id="@+id/tvDeliveryAddressLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Delivery Address"
+                android:textSize="@dimen/text_label"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilMobileNumber" />
+
+            <!-- ── Delivery Address Input ── -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDeliveryAddress"
+                style="@style/LoginInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/input_stroke_selector"
+                app:startIconDrawable="@android:drawable/ic_dialog_map"
+                app:startIconTint="@color/text_hint"
+                app:endIconMode="custom"
+                app:endIconDrawable="@android:drawable/ic_menu_mylocation"
+                app:endIconTint="@color/green_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDeliveryAddressLabel">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDeliveryAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tap map icon to select"
+                    android:inputType="textPostalAddress"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:imeOptions="actionDone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/tilDeliveryAddress"
+                app:layout_constraintBottom_toTopOf="@id/btnSave"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- ── Save Button ── -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                android:text="Save Changes"
+                android:textSize="16sp"
+                android:fontFamily="@font/inter_bold"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/green_primary"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilDeliveryAddress"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

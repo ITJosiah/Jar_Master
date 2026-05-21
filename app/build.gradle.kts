@@ -28,6 +28,9 @@ android {
         resValue("string", "fb_login_protocol_scheme", "fb${localProperties["FACEBOOK_APP_ID"] as String}")
         resValue("string", "facebook_client_token", localProperties["FACEBOOK_CLIENT_TOKEN"] as String)
 
+        resValue("string", "cloudinary_cloud_name", localProperties["CLOUDINARY_CLOUD_NAME"] as String)
+        resValue("string", "cloudinary_api_key", localProperties["CLOUDINARY_API_KEY"] as String)
+        resValue("string", "cloudinary_api_secret", localProperties["CLOUDINARY_API_SECRET"] as String)
 
     }
 
@@ -62,8 +65,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-database")     // Realtime Database
     implementation("com.google.firebase:firebase-firestore")    // Firestore
-    implementation("com.google.firebase:firebase-auth")         //Firebase Auth
-    implementation("com.google.firebase:firebase-storage")      // Firebase Storage (batch photos)
+    implementation("com.google.firebase:firebase-auth")         // Firebase Auth
+    // Batch photo uploads use Cloudinary (see BatchPhotoUploader)
 
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:21.0.0")
@@ -86,5 +89,10 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // OpenStreetMap
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+    // Location to get current phone location
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 
 }

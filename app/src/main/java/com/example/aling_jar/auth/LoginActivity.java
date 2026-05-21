@@ -418,7 +418,7 @@ public class LoginActivity extends AppCompatActivity {
         if ("Admin".equalsIgnoreCase(role)) {
             intent = new Intent(LoginActivity.this, com.example.aling_jar.admin.AdminActivity.class);
         } else {
-            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent = new Intent(LoginActivity.this, com.example.aling_jar.user.UserActivity.class);
         }
         intent.putExtra("role", role);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

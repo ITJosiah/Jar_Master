@@ -1,6 +1,7 @@
 package com.example.aling_jar.admin;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,7 +33,9 @@ public class AdminBatchesFragment extends Fragment {
 
     private RecyclerView rvBatches;
     private EditText etSearch;
-    private TextView tvBatchCount;
+    private TextView tvBatchCount, tvTotalStock, tvActiveBatchesCount;
+    private TextView tvLaingStock, tvLaingBatches;
+    private TextView tvSinantolStock, tvSinantolBatches;
     private BatchAdapter batchAdapter;
     private List<Batch> allBatches = new ArrayList<>();
     private List<Batch> filteredBatches = new ArrayList<>();
@@ -60,6 +63,12 @@ public class AdminBatchesFragment extends Fragment {
         rvBatches = view.findViewById(R.id.rvBatches);
         etSearch = view.findViewById(R.id.etSearch);
         tvBatchCount = view.findViewById(R.id.tvBatchCount);
+        tvTotalStock = view.findViewById(R.id.tvTotalStock);
+        tvActiveBatchesCount = view.findViewById(R.id.tvActiveBatchesCount);
+        tvLaingStock    = view.findViewById(R.id.tvLaingStock);
+        tvLaingBatches  = view.findViewById(R.id.tvLaingBatches);
+        tvSinantolStock   = view.findViewById(R.id.tvSinantolStock);
+        tvSinantolBatches = view.findViewById(R.id.tvSinantolBatches);
         tabAll = view.findViewById(R.id.tabAll);
         tabFresh = view.findViewById(R.id.tabFresh);
         tab30Days = view.findViewById(R.id.tab30Days);
@@ -69,13 +78,23 @@ public class AdminBatchesFragment extends Fragment {
         setupFilterTabs();
         setupSearch();
         startRealtimeListener();
+
+        View btnNotification = view.findViewById(R.id.btnNotification);
+        if (btnNotification != null) {
+            btnNotification.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), com.example.aling_jar.user.notifications.NotificationsActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupRecyclerView() {
         batchAdapter = new BatchAdapter(filteredBatches, new BatchAdapter.OnBatchClickListener() {
             @Override
             public void onEditClick(Batch batch, int position) {
-                Toast.makeText(getContext(), "Edit: " + batch.getName(), Toast.LENGTH_SHORT).show();
+                if (getActivity() instanceof AdminActivity) {
+                    ((AdminActivity) getActivity()).openEditBatch(batch);
+                }
             }
 
             @Override
@@ -88,10 +107,38 @@ public class AdminBatchesFragment extends Fragment {
     }
 
     private void setupFilterTabs() {
-        tabAll.setOnClickListener(v -> applyFilter("ALL"));
-        tabFresh.setOnClickListener(v -> applyFilter("FRESH"));
-        tab30Days.setOnClickListener(v -> applyFilter("SELLING FAST"));
-        tabExpired.setOnClickListener(v -> applyFilter("CRITICAL"));
+        tabAll.setOnClickListener(v     -> { applyFilter("ALL");          setActiveTab(tabAll); });
+        tabFresh.setOnClickListener(v   -> { applyFilter("FRESH");        setActiveTab(tabFresh); });
+        tab30Days.setOnClickListener(v  -> { applyFilter("30 DAYS OLD");  setActiveTab(tab30Days); });
+        tabExpired.setOnClickListener(v -> { applyFilter("CRITICAL");     setActiveTab(tabExpired); });
+
+        // Default active tab on load
+        setActiveTab(tabAll);
+    }
+
+    /** Highlights the selected tab green and resets all others to inactive. */
+    private void setActiveTab(View selected) {
+        View[] tabs = { tabAll, tabFresh, tab30Days, tabExpired };
+        for (View tab : tabs) {
+            boolean isActive = tab == selected;
+            tab.setBackgroundResource(isActive ? R.drawable.bg_tab_active : R.drawable.bg_tab_inactive);
+
+            // For plain TextView tabs (tabAll)
+            if (tab instanceof TextView) {
+                ((TextView) tab).setTextColor(isActive ? 0xFFFFFFFF : 0xFF555555);
+            }
+
+            // For LinearLayout tabs (tabFresh, tab30Days, tabExpired) — update child TextView
+            if (tab instanceof android.widget.LinearLayout) {
+                android.widget.LinearLayout ll = (android.widget.LinearLayout) tab;
+                for (int i = 0; i < ll.getChildCount(); i++) {
+                    android.view.View child = ll.getChildAt(i);
+                    if (child instanceof TextView) {
+                        ((TextView) child).setTextColor(isActive ? 0xFFFFFFFF : 0xFF555555);
+                    }
+                }
+            }
+        }
     }
 
     private void setupSearch() {
@@ -128,6 +175,37 @@ public class AdminBatchesFragment extends Fragment {
         }
         batchAdapter.updateList(filteredBatches);
         tvBatchCount.setText("ACTIVE BATCHES (" + filteredBatches.size() + ")");
+        updateSummary(filteredBatches);
+    }
+
+    private void updateSummary(List<Batch> currentList) {
+        long totalStock = 0;
+        long laingStock = 0;    int laingBatches = 0;
+        long sinantolStock = 0; int sinantolBatches = 0;
+
+        for (Batch b : currentList) {
+            totalStock += b.getQuantity();
+            String name = b.getProductName() != null ? b.getProductName().toLowerCase() : "";
+            if (name.contains("laing")) {
+                laingStock += b.getQuantity();
+                laingBatches++;
+            } else if (name.contains("sinantol")) {
+                sinantolStock += b.getQuantity();
+                sinantolBatches++;
+            }
+        }
+        if (tvTotalStock != null)
+            tvTotalStock.setText(String.format(java.util.Locale.getDefault(), "%,d", totalStock));
+        if (tvActiveBatchesCount != null)
+            tvActiveBatchesCount.setText(String.valueOf(currentList.size()));
+        if (tvLaingStock != null) {
+            tvLaingStock.setText(String.format(java.util.Locale.getDefault(), "%,d", laingStock));
+            tvLaingBatches.setText(laingBatches + " Active Batch" + (laingBatches != 1 ? "es" : ""));
+        }
+        if (tvSinantolStock != null) {
+            tvSinantolStock.setText(String.format(java.util.Locale.getDefault(), "%,d", sinantolStock));
+            tvSinantolBatches.setText(sinantolBatches + " Active Batch" + (sinantolBatches != 1 ? "es" : ""));
+        }
     }
 
     private void filterBatches() {
@@ -137,7 +215,7 @@ public class AdminBatchesFragment extends Fragment {
 
     private void startRealtimeListener() {
         batchListener = db.collection("batches")
-                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .orderBy("createdAt", Query.Direction.ASCENDING)
                 .addSnapshotListener((snapshots, error) -> {
                     if (error != null) {
                         Log.e(TAG, "Batch listener error", error);

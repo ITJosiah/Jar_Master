@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- User shop screen: top bar, search, filter chips, and product grid -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/user_bg">
+
+    <!-- ═══ Top Bar (Uniform Style) ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/admin_padding"
+        android:background="@color/white">
+
+        <!-- Logo (teaspoon inside light-green circle) -->
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:src="@drawable/ic_teaspoon"
+            android:background="@drawable/bg_logo_circle"
+            android:padding="8dp"
+            app:tint="@color/green_primary"
+            android:scaleType="centerInside"
+            android:contentDescription="Aling logo"
+            android:layout_marginEnd="@dimen/admin_topbar_icon_gap_large" />
+
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/user_shop_title"
+            android:textSize="@dimen/admin_topbar_title_large"
+            android:textColor="#222222"
+            android:fontFamily="@font/inter_bold" />
+
+        <!-- Notification Bell -->
+        <ImageView
+            android:id="@+id/ivNotification"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_notification"
+            android:background="@drawable/bg_badge_green"
+            app:tint="@color/green_primary"
+            android:contentDescription="Notifications" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/text_hint" />
+
+    <!-- ═══ Search Bar ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_search_height"
+        android:layout_marginStart="@dimen/user_padding"
+        android:layout_marginEnd="@dimen/user_padding"
+        android:layout_marginTop="@dimen/user_search_margin_top"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/user_search_padding_h"
+        android:paddingEnd="@dimen/user_search_padding_h"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/user_search_icon_size"
+            android:layout_height="@dimen/user_search_icon_size"
+            android:src="@drawable/ic_search"
+            app:tint="@color/text_hint"
+            android:layout_marginEnd="8dp"
+            android:importantForAccessibility="no" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="@string/user_search_hint"
+            android:textColorHint="@color/text_hint"
+            android:textSize="@dimen/user_search_text_size"
+            android:textColor="@color/text_primary"
+            android:fontFamily="@font/inter_regular"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no" />
+
+    </LinearLayout>
+
+    <!-- ═══ Category Filter Chips ═══ -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/user_chip_margin_top"
+        android:paddingStart="@dimen/user_padding"
+        android:paddingEnd="@dimen/user_padding"
+        android:scrollbars="none"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/chipContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/user_chip_height"
+                android:layout_marginEnd="@dimen/user_chip_margin_end"
+                android:background="@drawable/bg_chip_active"
+                android:gravity="center"
+                android:paddingStart="@dimen/user_chip_padding_h"
+                android:paddingEnd="@dimen/user_chip_padding_h"
+                android:text="@string/user_chip_all"
+                android:textColor="@color/user_chip_active_text"
+                android:textSize="@dimen/user_chip_text_size"
+                android:fontFamily="@font/inter_medium" />
+
+            <TextView
+                android:id="@+id/chipBestSellers"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/user_chip_height"
+                android:layout_marginEnd="@dimen/user_chip_margin_end"
+                android:background="@drawable/bg_chip_inactive"
+                android:gravity="center"
+                android:paddingStart="@dimen/user_chip_padding_h"
+                android:paddingEnd="@dimen/user_chip_padding_h"
+                android:text="@string/user_chip_best_sellers"
+                android:textColor="@color/user_chip_inactive_text"
+                android:textSize="@dimen/user_chip_text_size"
+                android:fontFamily="@font/inter_medium" />
+
+            <TextView
+                android:id="@+id/chipLaing"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/user_chip_height"
+                android:layout_marginEnd="@dimen/user_chip_margin_end"
+                android:background="@drawable/bg_chip_inactive"
+                android:gravity="center"
+                android:paddingStart="@dimen/user_chip_padding_h"
+                android:paddingEnd="@dimen/user_chip_padding_h"
+                android:text="@string/user_chip_laing"
+                android:textColor="@color/user_chip_inactive_text"
+                android:textSize="@dimen/user_chip_text_size"
+                android:fontFamily="@font/inter_medium" />
+
+            <TextView
+                android:id="@+id/chipSinantol"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/user_chip_height"
+                android:layout_marginEnd="@dimen/user_chip_margin_end"
+                android:background="@drawable/bg_chip_inactive"
+                android:gravity="center"
+                android:paddingStart="@dimen/user_chip_padding_h"
+                android:paddingEnd="@dimen/user_chip_padding_h"
+                android:text="Sinantol"
+                android:textColor="@color/user_chip_inactive_text"
+                android:textSize="@dimen/user_chip_text_size"
+                android:fontFamily="@font/inter_medium" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- ═══ Product Grid ═══ -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:paddingStart="@dimen/user_padding"
+        android:paddingEnd="@dimen/user_padding"
+        android:paddingBottom="@dimen/user_content_margin_bottom"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_shop_product"
+        tools:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+</LinearLayout>

@@ -37,17 +37,6 @@
             android:textColor="#222222" />
 
         <ImageView
-            android:id="@+id/btnSearch"
-            android:layout_width="@dimen/admin_topbar_btn_size"
-            android:layout_height="@dimen/admin_topbar_btn_size"
-            android:padding="@dimen/admin_topbar_btn_padding"
-            android:src="@drawable/ic_search"
-            android:background="@drawable/bg_badge_green"
-            android:contentDescription="Search"
-            app:tint="#2E7D32"
-            android:layout_marginEnd="@dimen/admin_topbar_icon_gap" />
-
-        <ImageView
             android:id="@+id/btnNotification"
             android:layout_width="@dimen/admin_topbar_btn_size"
             android:layout_height="@dimen/admin_topbar_btn_size"

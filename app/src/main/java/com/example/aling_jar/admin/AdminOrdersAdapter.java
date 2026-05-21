@@ -17,52 +17,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AdminOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdminOrdersAdapter extends RecyclerView.Adapter<AdminOrdersAdapter.OrderCardHolder> {
 
-    private static final int TYPE_SECTION_HEADER = 0;
-    private static final int TYPE_ORDER_CARD = 1;
-
-    private List<Object> displayList = new ArrayList<>();
+    private List<Order> displayList = new ArrayList<>();
     private OnOrderActionListener listener;
+    private int currentTabIndex = 0;
 
     public interface OnOrderActionListener {
         void onConfirmClick(Order order, int position);
         void onDeclineClick(Order order, int position);
+        void onDeliverClick(Order order, int position);
     }
 
     public AdminOrdersAdapter(OnOrderActionListener listener) {
         this.listener = listener;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        Object item = displayList.get(position);
-        return item instanceof SectionHeader ? TYPE_SECTION_HEADER : TYPE_ORDER_CARD;
-    }
-
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == TYPE_SECTION_HEADER) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_order_section_header, parent, false);
-            return new SectionHeaderHolder(v);
-        } else {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_order_admin, parent, false);
-            return new OrderCardHolder(v);
-        }
+    public OrderCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_order_admin, parent, false);
+        return new OrderCardHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof SectionHeaderHolder) {
-            SectionHeader h = (SectionHeader) displayList.get(position);
-            ((SectionHeaderHolder) holder).bind(h);
-        } else {
-            OrderCardItem item = (OrderCardItem) displayList.get(position);
-            ((OrderCardHolder) holder).bind(item.order, item.isProcessing, position);
-        }
+    public void onBindViewHolder(@NonNull OrderCardHolder holder, int position) {
+        Order order = displayList.get(position);
+        holder.bind(order, currentTabIndex, position);
     }
 
     @Override
@@ -70,55 +52,18 @@ public class AdminOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return displayList.size();
     }
 
-    public void setItems(List<Object> items) {
+    public void setItems(List<Order> items, int tabIndex) {
+        this.currentTabIndex = tabIndex;
         this.displayList = items != null ? items : new ArrayList<>();
         notifyDataSetChanged();
-    }
-
-    static class SectionHeader {
-        String title;
-        String badge;
-        boolean showBadge;
-
-        SectionHeader(String title, String badge, boolean showBadge) {
-            this.title = title;
-            this.badge = badge;
-            this.showBadge = showBadge;
-        }
-    }
-
-    static class OrderCardItem {
-        Order order;
-        boolean isProcessing;
-
-        OrderCardItem(Order order, boolean isProcessing) {
-            this.order = order;
-            this.isProcessing = isProcessing;
-        }
-    }
-
-    static class SectionHeaderHolder extends RecyclerView.ViewHolder {
-        TextView tvSectionTitle, tvSectionBadge;
-
-        SectionHeaderHolder(View itemView) {
-            super(itemView);
-            tvSectionTitle = itemView.findViewById(R.id.tvSectionTitle);
-            tvSectionBadge = itemView.findViewById(R.id.tvSectionBadge);
-        }
-
-        void bind(SectionHeader h) {
-            tvSectionTitle.setText(h.title);
-            tvSectionBadge.setText(h.badge);
-            tvSectionBadge.setVisibility(h.showBadge ? View.VISIBLE : View.GONE);
-        }
     }
 
     class OrderCardHolder extends RecyclerView.ViewHolder {
         View containerAvatar;
         ImageView imgCustomer;
-        TextView tvCustomerName, tvOrderMeta, tvAddress, tvOrderTotal, tvItemCount, tvStatusBadge;
+        TextView tvCustomerName, tvOrderMeta, tvAddress, tvOrderItems, tvOrderTotal, tvItemCount, tvStatusBadge;
         View layoutActions;
-        View btnConfirm, btnDecline;
+        View btnConfirm, btnDecline, btnDeliver;
 
         OrderCardHolder(View itemView) {
             super(itemView);
@@ -127,15 +72,17 @@ public class AdminOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
             tvOrderMeta = itemView.findViewById(R.id.tvOrderMeta);
             tvAddress = itemView.findViewById(R.id.tvAddress);
+            tvOrderItems = itemView.findViewById(R.id.tvOrderItems);
             tvOrderTotal = itemView.findViewById(R.id.tvOrderTotal);
             tvItemCount = itemView.findViewById(R.id.tvItemCount);
             tvStatusBadge = itemView.findViewById(R.id.tvStatusBadge);
             layoutActions = itemView.findViewById(R.id.layoutActions);
             btnConfirm = itemView.findViewById(R.id.btnConfirm);
             btnDecline = itemView.findViewById(R.id.btnDecline);
+            btnDeliver = itemView.findViewById(R.id.btnDeliver);
         }
 
-        void bind(Order order, boolean isProcessing, int position) {
+        void bind(Order order, int tabIndex, int position) {
             tvCustomerName.setText(order.getCustomerName() != null ? order.getCustomerName() : "Unknown");
             tvOrderTotal.setText(String.format(Locale.getDefault(), "₱%.2f", order.getTotal()));
 
@@ -176,20 +123,44 @@ public class AdminOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 } catch (Exception ignored) { }
             }
             tvItemCount.setText(itemCount + (itemCount == 1 ? " item" : " items"));
+            boolean isProcessing = tabIndex != 0; // if not pending, it's processing or done
             tvItemCount.setVisibility(isProcessing ? View.GONE : View.VISIBLE);
-            tvStatusBadge.setVisibility(isProcessing ? View.VISIBLE : View.GONE);
-            tvStatusBadge.setText("PREPARING");
-
-            if (isProcessing) {
-                containerAvatar.setBackgroundResource(R.drawable.bg_input_rounded);
-                imgCustomer.setColorFilter(0xFF78909C);
-                tvOrderTotal.setTextColor(0xFF546E7A);
-                layoutActions.setVisibility(View.GONE);
+            
+            if (items != null && !items.isEmpty()) {
+                String formattedItems = "• " + items.replace(", ", "\n• ");
+                tvOrderItems.setText(formattedItems);
+                tvOrderItems.setVisibility(View.VISIBLE);
             } else {
+                tvOrderItems.setVisibility(View.GONE);
+            }
+            
+            tvStatusBadge.setVisibility(isProcessing ? View.VISIBLE : View.GONE);
+            tvStatusBadge.setText(order.getStatus() != null ? order.getStatus().toUpperCase() : "PENDING");
+
+            if (tabIndex == 0) {
+                // Pending
+                layoutActions.setVisibility(View.VISIBLE);
+                btnConfirm.setVisibility(View.VISIBLE);
+                btnDecline.setVisibility(View.VISIBLE);
+                btnDeliver.setVisibility(View.GONE);
                 containerAvatar.setBackgroundResource(R.drawable.bg_badge_green);
                 imgCustomer.setColorFilter(0xFF2E7D32);
                 tvOrderTotal.setTextColor(0xFF4CAF50);
+            } else if (tabIndex == 1) {
+                // Confirmed
                 layoutActions.setVisibility(View.VISIBLE);
+                btnConfirm.setVisibility(View.GONE);
+                btnDecline.setVisibility(View.GONE);
+                btnDeliver.setVisibility(View.VISIBLE);
+                containerAvatar.setBackgroundResource(R.drawable.bg_input_rounded);
+                imgCustomer.setColorFilter(0xFF78909C);
+                tvOrderTotal.setTextColor(0xFF546E7A);
+            } else {
+                // Delivery or History
+                layoutActions.setVisibility(View.GONE);
+                containerAvatar.setBackgroundResource(R.drawable.bg_input_rounded);
+                imgCustomer.setColorFilter(0xFF78909C);
+                tvOrderTotal.setTextColor(0xFF546E7A);
             }
 
             btnConfirm.setOnClickListener(v -> {
@@ -197,6 +168,9 @@ public class AdminOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
             btnDecline.setOnClickListener(v -> {
                 if (listener != null) listener.onDeclineClick(order, position);
+            });
+            btnDeliver.setOnClickListener(v -> {
+                if (listener != null) listener.onDeliverClick(order, position);
             });
         }
     }

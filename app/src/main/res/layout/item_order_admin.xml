@@ -70,8 +70,16 @@
                 android:textSize="12sp"
                 android:textColor="#78909C"
                 android:layout_marginTop="2dp"
-                android:maxLines="1"
-                android:ellipsize="end"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvOrderItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2x Spicy Laing (250g)"
+                android:textSize="13sp"
+                android:textColor="#546E7A"
+                android:layout_marginTop="6dp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -150,5 +158,18 @@
             android:textColor="#546E7A"
             android:gravity="center"
             android:background="@drawable/bg_btn_decline" />
+
+        <TextView
+            android:id="@+id/btnDeliver"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Deliver"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/bg_btn_confirm"
+            android:visibility="gone" />
+
     </LinearLayout>
 </LinearLayout>

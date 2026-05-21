@@ -1,6 +1,7 @@
 package com.example.aling_jar.admin;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aling_jar.R;
+import com.example.aling_jar.data.model.BatchOrderItem;
+import com.example.aling_jar.utils.CustomDialog;
+import com.example.aling_jar.utils.NotificationHelper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,6 +60,14 @@ public class AdminOrdersFragment extends Fragment {
         setupTabs();
         setupRecyclerView();
         startRealtimeListener();
+
+        View btnNotification = view.findViewById(R.id.btnNotification);
+        if (btnNotification != null) {
+            btnNotification.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), com.example.aling_jar.user.notifications.NotificationsActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupTabs() {
@@ -89,81 +102,46 @@ public class AdminOrdersFragment extends Fragment {
             public void onDeclineClick(Order order, int position) {
                 updateOrderStatus(order, "DECLINED");
             }
+
+            @Override
+            public void onDeliverClick(Order order, int position) {
+                updateOrderStatus(order, "DELIVERY");
+            }
         });
         rvOrders.setLayoutManager(new LinearLayoutManager(getContext()));
         rvOrders.setAdapter(orderAdapter);
     }
 
     private void buildAndUpdateDisplayList() {
-        List<Object> displayList = new ArrayList<>();
-
-        List<Order> pending = new ArrayList<>();
-        List<Order> processing = new ArrayList<>();
+        List<Order> displayList = new ArrayList<>();
 
         for (Order o : orderList) {
             String status = o.getStatus() != null ? o.getStatus().toUpperCase() : "";
             switch (selectedTabIndex) {
-                case 0: // Pending tab: NEW ORDERS (PENDING) + PROCESSING (CONFIRMED)
+                case 0: // Pending tab: PENDING only
                     if ("PENDING".equals(status)) {
-                        pending.add(o);
-                    } else if ("CONFIRMED".equals(status) || "PREPARING".equals(status)) {
-                        processing.add(o);
+                        displayList.add(o);
                     }
                     break;
-                case 1: // Confirmed: CONFIRMED only
+                case 1: // Confirmed tab: CONFIRMED only
                     if ("CONFIRMED".equals(status) || "PREPARING".equals(status)) {
-                        processing.add(o);
+                        displayList.add(o);
                     }
                     break;
-                case 2: // Delivery: DELIVERY, PREPARING, etc.
-                    if ("DELIVERY".equals(status) || "DELIVERING".equals(status) || "PREPARING".equals(status) || "CONFIRMED".equals(status)) {
-                        processing.add(o);
+                case 2: // Delivery tab: DELIVERY only
+                    if ("DELIVERY".equals(status) || "DELIVERING".equals(status)) {
+                        displayList.add(o);
                     }
                     break;
-                case 3: // History: DECLINED, DELIVERED, CANCELLED
+                case 3: // History tab: DECLINED, DELIVERED, CANCELLED
                     if ("DECLINED".equals(status) || "DELIVERED".equals(status) || "CANCELLED".equals(status)) {
-                        processing.add(o); // show as card without actions
+                        displayList.add(o);
                     }
                     break;
             }
         }
 
-        if (selectedTabIndex == 0) {
-            if (!pending.isEmpty()) {
-                displayList.add(new AdminOrdersAdapter.SectionHeader(
-                        "NEW ORDERS (" + pending.size() + ")",
-                        "Today",
-                        true));
-                for (Order o : pending) {
-                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, false));
-                }
-            }
-            if (!processing.isEmpty()) {
-                displayList.add(new AdminOrdersAdapter.SectionHeader(
-                        "PROCESSING (" + processing.size() + ")",
-                        "",
-                        false));
-                for (Order o : processing) {
-                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, true));
-                }
-            }
-        } else {
-            String sectionTitle = selectedTabIndex == 1 ? "CONFIRMED"
-                    : selectedTabIndex == 2 ? "DELIVERY"
-                    : "HISTORY";
-            if (!processing.isEmpty()) {
-                displayList.add(new AdminOrdersAdapter.SectionHeader(
-                        sectionTitle + " (" + processing.size() + ")",
-                        "",
-                        false));
-                for (Order o : processing) {
-                    boolean showAsProcessing = selectedTabIndex != 0;
-                    displayList.add(new AdminOrdersAdapter.OrderCardItem(o, showAsProcessing));
-                }
-            }
-        }
-
-        orderAdapter.setItems(displayList);
+        orderAdapter.setItems(displayList, selectedTabIndex);
     }
 
     private void startRealtimeListener() {
@@ -196,20 +174,72 @@ public class AdminOrdersFragment extends Fragment {
     private void updateOrderStatus(Order order, String newStatus) {
         if (order.getDocumentId() == null) return;
 
-        db.collection("orders").document(order.getDocumentId())
-                .update("status", newStatus)
-                .addOnSuccessListener(aVoid -> {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Order " + newStatus.toLowerCase(),
-                                Toast.LENGTH_SHORT).show();
+        if ("DECLINED".equals(newStatus)) {
+            // Run transaction to restore stock AND update status
+            db.runTransaction(transaction -> {
+                if (order.getBatchDetails() != null && !order.getBatchDetails().isEmpty()) {
+                    List<DocumentSnapshot> snaps = new ArrayList<>();
+                    // READ FIRST
+                    for (BatchOrderItem item : order.getBatchDetails()) {
+                        if (item.getBatchDocId() != null) {
+                            snaps.add(transaction.get(db.collection("batches").document(item.getBatchDocId())));
+                        }
                     }
-                })
-                .addOnFailureListener(e -> {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Failed to update order",
-                                Toast.LENGTH_SHORT).show();
+                    
+                    // THEN WRITE
+                    int i = 0;
+                    for (BatchOrderItem item : order.getBatchDetails()) {
+                        if (item.getBatchDocId() != null) {
+                            DocumentSnapshot batchDoc = snaps.get(i++);
+                            if (batchDoc.exists()) {
+                                long currentQty = batchDoc.getLong("quantity") != null 
+                                        ? batchDoc.getLong("quantity") : 0;
+                                transaction.update(batchDoc.getReference(), 
+                                        "quantity", currentQty + item.getQuantity());
+                            }
+                        }
                     }
-                });
+                }
+                transaction.update(db.collection("orders").document(order.getDocumentId()), "status", newStatus);
+                return null;
+            }).addOnSuccessListener(aVoid -> {
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Order declined & stock restored", Toast.LENGTH_SHORT).show();
+                }
+                // Notify the user that their order was declined
+                if (order.getUserId() != null) {
+                    NotificationHelper.notifyOrderDeclined(order.getUserId(), order.getOrderId());
+                }
+            }).addOnFailureListener(e -> {
+                if (getContext() != null) {
+                    Toast.makeText(getContext(), "Failed to decline order", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // Just update the status normally (e.g. CONFIRMED)
+            db.collection("orders").document(order.getDocumentId())
+                    .update("status", newStatus)
+                    .addOnSuccessListener(aVoid -> {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Order " + newStatus.toLowerCase(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // Send the appropriate notification based on the new status
+                        if (order.getUserId() != null) {
+                            if ("CONFIRMED".equals(newStatus)) {
+                                NotificationHelper.notifyOrderConfirmed(order.getUserId(), order.getOrderId());
+                            } else if ("DELIVERY".equals(newStatus)) {
+                                NotificationHelper.notifyOrderOutForDelivery(order.getUserId(), order.getOrderId());
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Failed to update order",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     @Override

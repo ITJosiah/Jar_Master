@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adminBottomNavRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="@dimen/admin_nav_bar_margin_h"
+    android:paddingEnd="@dimen/admin_nav_bar_margin_h"
+    android:paddingBottom="@dimen/admin_nav_bar_margin_bottom">
+
+    <!-- The Nav Tray Bar (Full width, attached to bottom) -->
+    <LinearLayout
+        android:id="@+id/navTrayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/admin_nav_tray_height"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_nav_tray"
+        android:paddingStart="@dimen/admin_nav_tray_padding_h"
+        android:paddingEnd="@dimen/admin_nav_tray_padding_h"
+        android:paddingTop="@dimen/admin_nav_tray_padding_v"
+        android:paddingBottom="@dimen/admin_nav_tray_padding_v"
+        android:gravity="center_vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- Nav items (4) + 1 center spacer will be added programmatically -->
+
+    </LinearLayout>
+
+    <!-- Elevated Centered FAB -->
+    <ImageView
+        android:id="@+id/navFab"
+        android:layout_width="@dimen/admin_nav_fab_size"
+        android:layout_height="@dimen/admin_nav_fab_size"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_nav_fab_centered"
+        android:elevation="8dp"
+        android:src="@drawable/ic_add_batches"
+        android:scaleType="centerInside"
+        android:padding="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Add New Batch"
+        app:tint="@android:color/white" />
+
+</FrameLayout>

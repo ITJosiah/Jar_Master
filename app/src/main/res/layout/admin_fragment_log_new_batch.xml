@@ -51,7 +51,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPickBatchPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="106dp"
+                android:layout_height="wrap_content"
+                android:minHeight="106dp"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
@@ -59,36 +60,74 @@
                 app:strokeWidth="1dp"
                 app:cardBackgroundColor="#FAFAFA">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="12dp">
+                    android:layout_height="wrap_content"
+                    android:minHeight="106dp">
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_add_batches"
-                        app:tint="#9E9E9E"
-                        android:contentDescription="Pick photo" />
+                    <!-- Upload prompt (shown when no photo selected) -->
+                    <LinearLayout
+                        android:id="@+id/layoutUploadPrompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="106dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/tvBatchPhotoLabel"
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_add_batches"
+                            app:tint="#9E9E9E"
+                            android:contentDescription="Pick photo" />
+
+                        <TextView
+                            android:id="@+id/tvBatchPhotoLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upload Batch Photo"
+                            android:textStyle="bold"
+                            android:textColor="#444444"
+                            android:layout_marginTop="6dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(Optional)"
+                            android:textColor="#9E9E9E"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <!-- Photo preview (shown after photo is selected) -->
+                    <LinearLayout
+                        android:id="@+id/layoutPhotoPreview"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Upload Batch Photo"
-                        android:textStyle="bold"
-                        android:textColor="#444444"
-                        android:layout_marginTop="6dp" />
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(Optional)"
-                        android:textColor="#9E9E9E"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/ivBatchPhotoPreview"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:scaleType="fitCenter"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="Batch photo preview" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tap to change photo"
+                            android:textColor="#9E9E9E"
+                            android:textSize="11sp"
+                            android:layout_marginTop="4dp" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Select product -->
@@ -221,6 +260,105 @@
                         android:background="@android:color/transparent" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+            <!-- Meat Ingredient toggle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meat Ingredient"
+                android:textStyle="bold"
+                android:textColor="#222222"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardIngredientToggle"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="999dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#EEEEEE"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="#F2F2F2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/tvIngredientPork"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Pork"
+                        android:textStyle="bold"
+                        android:textColor="#222222"
+                        android:background="@drawable/bg_flavor_selected" />
+
+                    <TextView
+                        android:id="@+id/tvIngredientTinapa"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Tinapa"
+                        android:textStyle="bold"
+                        android:textColor="#666666"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Size variation toggle -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size Variation"
+                android:textStyle="bold"
+                android:textColor="#222222"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSizeToggle"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="999dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#EEEEEE"
+                app:strokeWidth="1dp"
+                app:cardBackgroundColor="#F2F2F2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/tvSize320g"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="320g"
+                        android:textStyle="bold"
+                        android:textColor="#222222"
+                        android:background="@drawable/bg_flavor_selected" />
+
+                    <TextView
+                        android:id="@+id/tvSize190g"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="190g"
+                        android:textStyle="bold"
+                        android:textColor="#666666"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Quantity -->
             <TextView
@@ -291,22 +429,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_input_rounded"
+                android:backgroundTint="#F2F2F2"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 android:layout_marginBottom="14dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBatchId"
+                <TextView
+                    android:id="@+id/tvBatchIdDisplay"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:inputType="text"
-                    android:hint="e.g. B-092-MAY"
-                    android:textColor="#222222"
-                    android:textColorHint="#9E9E9E"
-                    android:background="@null"
-                    android:maxLines="1" />
+                    android:layout_height="wrap_content"
+                    android:text="System Generated"
+                    android:textColor="#888888"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <!-- Price -->

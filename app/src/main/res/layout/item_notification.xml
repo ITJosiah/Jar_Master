@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <FrameLayout
+            android:id="@+id/flIconContainer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_icon_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivNotificationIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_notification"
+                app:tint="@color/green_primary" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvNotificationTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Order Shipped!"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintEnd_toStartOf="@id/tvNotificationTime"
+            app:layout_constraintStart_toEndOf="@id/flIconContainer"
+            app:layout_constraintTop_toTopOf="@id/flIconContainer" />
+
+        <TextView
+            android:id="@+id/tvNotificationMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Your order #1234 has been shipped and is on its way to you."
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:fontFamily="@font/inter_regular"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvNotificationTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvNotificationTitle" />
+
+        <TextView
+            android:id="@+id/tvNotificationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2h"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            android:fontFamily="@font/inter_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvNotificationTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvNotificationTitle" />
+
+        <View
+            android:id="@+id/vUnreadIndicator"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_unread_indicator"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNotificationTime" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

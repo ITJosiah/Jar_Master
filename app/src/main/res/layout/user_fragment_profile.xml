@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/user_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header Profile Card -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"
+            android:background="@drawable/bg_profile_header">
+
+            <TextView
+                android:id="@+id/tvProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="My Profile"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/flProfileImage"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tvProfileTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile_placeholder"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    android:padding="2dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fabEditImage"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="2dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="3dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_edit"
+                        android:padding="6dp"
+                        app:tint="@color/green_primary" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:text="Josiah Luke"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toBottomOf="@id/flProfileImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="josiah@example.com"
+                android:textColor="#E0E0E0"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_regular"
+                app:layout_constraintTop_toBottomOf="@id/tvUserName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Profile Rows and Options -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Section: Activity -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Activity"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:textAllCaps="true"
+                android:layout_marginBottom="12dp" />
+
+            <include
+                android:id="@+id/rowMyOrders"
+                layout="@layout/layout_profile_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp" />
+
+            <include
+                android:id="@+id/rowSavedItems"
+                layout="@layout/layout_profile_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Section: Account -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Account Settings"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:textAllCaps="true"
+                android:layout_marginBottom="12dp" />
+
+            <include
+                android:id="@+id/rowAccountInfo"
+                layout="@layout/layout_profile_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp" />
+
+            <include
+                android:id="@+id/rowChangePassword"
+                layout="@layout/layout_profile_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Section: More -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/inter_semibold"
+                android:textAllCaps="true"
+                android:layout_marginBottom="12dp" />
+
+            <include
+                android:id="@+id/rowAbout"
+                layout="@layout/layout_profile_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:text="Log Out"
+                android:textColor="#E53935"
+                android:fontFamily="@font/inter_bold"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/white"
+                app:strokeColor="#FFCDD2"
+                app:strokeWidth="1dp"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_lock"
+                app:iconTint="#E53935"
+                app:iconGravity="textStart" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

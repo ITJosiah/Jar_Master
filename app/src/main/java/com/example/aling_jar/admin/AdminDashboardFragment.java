@@ -1,6 +1,7 @@
 package com.example.aling_jar.admin;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aling_jar.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import com.example.aling_jar.data.model.Batch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +39,16 @@ public class AdminDashboardFragment extends Fragment {
     private static final String TAG = "AdminDashboard";
 
     // Views
-    private TextView tvAdminName, tvStock, tvStockChange;
+    private TextView tvStock, tvStockChange;
     private TextView tvOrders, tvOrdersChange;
     private TextView tvAlerts, tvAlertsLabel;
     private TextView tvPendingOrderCount;
-    private RecyclerView rvRecentBatches, rvPendingOrders;
+    private TextView tvLaingStock, tvLaingBatches;
+    private TextView tvSinantolStock, tvSinantolBatches;
+    private RecyclerView rvRecentBatches, rvPendingOrders, rvVariationsStock;
     private MaterialButton btnLogNewBatch;
     private View btnNotification;
-    private FloatingActionButton fabAdd;
+
     private androidx.core.widget.NestedScrollView scrollDashboard;
 
     // Firebase
@@ -51,12 +58,15 @@ public class AdminDashboardFragment extends Fragment {
     // Adapters
     private DashboardBatchAdapter batchAdapter;
     private OrderAdapter orderAdapter;
+    private VariationStockAdapter variationAdapter;
     private List<Batch> recentBatches = new ArrayList<>();
     private List<Order> pendingOrders = new ArrayList<>();
+    private List<com.example.aling_jar.data.model.VariationStock> variationStocks = new ArrayList<>();
 
     // Listeners for real-time updates
     private ListenerRegistration batchListener;
     private ListenerRegistration orderListener;
+    private ListenerRegistration totalStatsListener;
 
     @Nullable
     @Override
@@ -74,13 +84,11 @@ public class AdminDashboardFragment extends Fragment {
 
         initViews(view);
         setupRecyclerViews();
-        loadAdminName();
         setupClickListeners();
         startRealtimeListeners();
     }
 
     private void initViews(View view) {
-        tvAdminName = view.findViewById(R.id.tvAdminName);
         tvStock = view.findViewById(R.id.tvStock);
         tvStockChange = view.findViewById(R.id.tvStockChange);
         tvOrders = view.findViewById(R.id.tvOrders);
@@ -88,11 +96,16 @@ public class AdminDashboardFragment extends Fragment {
         tvAlerts = view.findViewById(R.id.tvAlerts);
         tvAlertsLabel = view.findViewById(R.id.tvAlertsLabel);
         tvPendingOrderCount = view.findViewById(R.id.tvPendingOrderCount);
+        tvLaingStock        = view.findViewById(R.id.tvLaingStock);
+        tvLaingBatches      = view.findViewById(R.id.tvLaingBatches);
+        tvSinantolStock     = view.findViewById(R.id.tvSinantolStock);
+        tvSinantolBatches   = view.findViewById(R.id.tvSinantolBatches);
         rvRecentBatches = view.findViewById(R.id.rvRecentBatches);
         rvPendingOrders = view.findViewById(R.id.rvPendingOrders);
+        rvVariationsStock = view.findViewById(R.id.rvVariationsStock);
         btnLogNewBatch = view.findViewById(R.id.btnLogNewBatch);
         btnNotification = view.findViewById(R.id.btnNotification);
-        fabAdd = view.findViewById(R.id.fabAdd);
+
         scrollDashboard = view.findViewById(R.id.scrollDashboard);
     }
 
@@ -127,19 +140,12 @@ public class AdminDashboardFragment extends Fragment {
         rvPendingOrders.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvPendingOrders.setAdapter(orderAdapter);
-    }
 
-    private void loadAdminName() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            db.collection("users").document(user.getUid())
-                    .get()
-                    .addOnSuccessListener(doc -> {
-                        if (doc.exists() && doc.getString("fullName") != null) {
-                            tvAdminName.setText(doc.getString("fullName"));
-                        }
-                    });
-        }
+        // Variations Stock Adapter
+        variationAdapter = new VariationStockAdapter(variationStocks);
+        rvVariationsStock.setLayoutManager(
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvVariationsStock.setAdapter(variationAdapter);
     }
 
     private void setupClickListeners() {
@@ -149,12 +155,12 @@ public class AdminDashboardFragment extends Fragment {
             }
         });
 
-        // FAB also opens the full-screen log batch form
-        fabAdd.setOnClickListener(v -> {
-            if (getActivity() instanceof AdminActivity) {
-                ((AdminActivity) getActivity()).openLogNewBatch();
-            }
-        });
+        if (btnNotification != null) {
+            btnNotification.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), com.example.aling_jar.user.notifications.NotificationsActivity.class);
+                startActivity(intent);
+            });
+        }
 
         // View All Batches — navigate to Batches tab
         View tvViewAllBatches = requireView().findViewById(R.id.tvViewAllBatches);
@@ -175,8 +181,10 @@ public class AdminDashboardFragment extends Fragment {
         // Listen to batches (recent 5, ordered by createdAt)
         batchListener = db.collection("batches")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
-                .limit(5)
-                .addSnapshotListener((snapshots, error) -> {
+                .limit(3)
+                .addSnapshotListener(new com.google.firebase.firestore.EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
                     if (error != null) {
                         Log.e(TAG, "Batch listener error", error);
                         return;
@@ -202,6 +210,7 @@ public class AdminDashboardFragment extends Fragment {
                         updateStockCard(totalStock);
                         updateAlertsCard(criticalCount);
                     }
+                }
                 });
 
         // Also get total stock from ALL batches for dashboard card
@@ -210,7 +219,9 @@ public class AdminDashboardFragment extends Fragment {
         // Listen to orders (real-time)
         orderListener = db.collection("orders")
                 .orderBy("createdAt", Query.Direction.DESCENDING)
-                .addSnapshotListener((snapshots, error) -> {
+                .addSnapshotListener(new com.google.firebase.firestore.EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
                     if (error != null) {
                         Log.e(TAG, "Order listener error", error);
                         return;
@@ -235,35 +246,99 @@ public class AdminDashboardFragment extends Fragment {
                         tvPendingOrderCount.setText(pendingCount + " NEW");
                         tvOrders.setText(String.valueOf(totalOrders));
                         tvOrdersChange.setText(pendingCount + " pending");
+
+                        // Update the bottom nav badge
+                        if (getActivity() instanceof AdminActivity) {
+                            ((AdminActivity) getActivity()).updateOrdersBadge(pendingCount);
+                        }
                     }
+                }
                 });
     }
 
     private void loadTotalDashboardStats() {
-        // Get total stock from ALL batches
-        db.collection("batches")
-                .get()
-                .addOnSuccessListener(snapshots -> {
+        // Build empty permutations
+        variationStocks.clear();
+        String[] products = {"Laing", "Sinantol"};
+        String[] flavors = {"Classic", "Spicy"};
+        String[] ingredients = {"Pork", "Tinapa"};
+        String[] sizes = {"190g", "320g"};
+        
+        for (String p : products) {
+            for (String f : flavors) {
+                for (String i : ingredients) {
+                    for (String s : sizes) {
+                        variationStocks.add(new com.example.aling_jar.data.model.VariationStock(p, f, i, s));
+                    }
+                }
+            }
+        }
+        
+        totalStatsListener = db.collection("batches")
+                .addSnapshotListener(new com.google.firebase.firestore.EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.e(TAG, "Dashboard batches listener error", error);
+                        return;
+                    }
+                    if (snapshot != null) {
                     long totalStock = 0;
                     int criticalCount = 0;
-                    for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                    long laingStock = 0;  int laingBatches = 0;
+                    long sinantolStock = 0; int sinantolBatches = 0;
+
+                    for (DocumentSnapshot doc : snapshot.getDocuments()) {
                         Batch batch = doc.toObject(Batch.class);
                         if (batch != null) {
                             totalStock += batch.getQuantity();
-                            if ("CRITICAL".equalsIgnoreCase(batch.getStatus())) {
-                                criticalCount++;
+                            if ("CRITICAL".equalsIgnoreCase(batch.getStatus())) criticalCount++;
+
+                            String name = batch.getProductName() != null
+                                    ? batch.getProductName().toLowerCase() : "";
+                            if (name.contains("laing")) {
+                                laingStock += batch.getQuantity();
+                                laingBatches++;
+                            } else if (name.contains("sinantol")) {
+                                sinantolStock += batch.getQuantity();
+                                sinantolBatches++;
+                            }
+
+                            // Add to variation
+                            for (com.example.aling_jar.data.model.VariationStock var : variationStocks) {
+                                if (var.matches(batch.getProductName(), batch.getFlavorProfile(), batch.getIngredient(), batch.getSize())) {
+                                    var.addStock(batch.getQuantity());
+                                    break;
+                                }
                             }
                         }
                     }
+                    
+                    variationAdapter.updateList(variationStocks);
                     updateStockCard(totalStock);
                     updateAlertsCard(criticalCount);
+                    updateProductCards(laingStock, laingBatches, sinantolStock, sinantolBatches);
+                    }
+                }
                 });
+    }
+
+    private void updateProductCards(long laingStock, int laingBatches,
+                                    long sinantolStock, int sinantolBatches) {
+        if (tvLaingStock != null) {
+            tvLaingStock.setText(String.format(Locale.getDefault(), "%,d", laingStock));
+            tvLaingBatches.setText(laingBatches + " Active Batch" + (laingBatches != 1 ? "es" : ""));
+        }
+        if (tvSinantolStock != null) {
+            tvSinantolStock.setText(String.format(Locale.getDefault(), "%,d", sinantolStock));
+            tvSinantolBatches.setText(sinantolBatches + " Active Batch" + (sinantolBatches != 1 ? "es" : ""));
+        }
     }
 
     private void updateStockCard(long totalStock) {
         if (tvStock != null) {
             tvStock.setText(String.format(Locale.getDefault(), "%,d", totalStock));
-            tvStockChange.setText("Total units");
+            tvStockChange.setText("Total Jars");
         }
     }
 
@@ -283,16 +358,22 @@ public class AdminDashboardFragment extends Fragment {
 
         db.collection("orders").document(order.getDocumentId())
                 .update("status", newStatus)
-                .addOnSuccessListener(aVoid -> {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Order " + newStatus.toLowerCase(),
-                                Toast.LENGTH_SHORT).show();
+                .addOnSuccessListener(new com.google.android.gms.tasks.OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Order " + newStatus.toLowerCase(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
-                .addOnFailureListener(e -> {
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Failed to update order",
-                                Toast.LENGTH_SHORT).show();
+                .addOnFailureListener(new com.google.android.gms.tasks.OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Failed to update order",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
@@ -310,13 +391,17 @@ public class AdminDashboardFragment extends Fragment {
                 .setPositiveButton("Yes, Remove", (dialog, which) -> {
                     db.collection("batches").document(batch.getDocumentId())
                             .delete()
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(getContext(), "Batch removed",
-                                        Toast.LENGTH_SHORT).show();
+                            .addOnSuccessListener(new com.google.android.gms.tasks.OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getContext(), "Batch removed", Toast.LENGTH_SHORT).show();
+                                }
                             })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(getContext(), "Failed to remove batch",
-                                        Toast.LENGTH_SHORT).show();
+                            .addOnFailureListener(new com.google.android.gms.tasks.OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(), "Failed to remove batch", Toast.LENGTH_SHORT).show();
+                                }
                             });
                 })
                 .setNegativeButton("Cancel", null)
@@ -329,5 +414,6 @@ public class AdminDashboardFragment extends Fragment {
         // Clean up listeners
         if (batchListener != null) batchListener.remove();
         if (orderListener != null) orderListener.remove();
+        if (totalStatsListener != null) totalStatsListener.remove();
     }
 }

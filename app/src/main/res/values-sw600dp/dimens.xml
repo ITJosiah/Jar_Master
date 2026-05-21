@@ -179,10 +179,25 @@
     <dimen name="admin_settings_card_corner">14dp</dimen>
     <dimen name="admin_settings_profile_margin_start">17dp</dimen>
 
-    <!-- ── Bottom Nav ── -->
-    <dimen name="admin_bottom_nav_height">78dp</dimen>
-    <dimen name="admin_bottom_nav_margin">78dp</dimen>
-    <dimen name="admin_fab_margin_bottom">48dp</dimen>
+    <!-- ── Bottom Nav (Modern) ── -->
+    <dimen name="admin_nav_bar_margin_h">24dp</dimen>
+    <dimen name="admin_nav_bar_margin_bottom">16dp</dimen>
+    <dimen name="admin_nav_tray_height">84dp</dimen>
+    <dimen name="admin_nav_tray_corner">34dp</dimen>
+    <dimen name="admin_nav_tray_padding_h">16dp</dimen>
+    <dimen name="admin_nav_tray_padding_v">10dp</dimen>
+    <dimen name="admin_nav_pill_corner">24dp</dimen>
+    <dimen name="admin_nav_pill_padding_h">20dp</dimen>
+    <dimen name="admin_nav_pill_padding_v">12dp</dimen>
+    <dimen name="admin_nav_item_icon_size">26dp</dimen>
+    <dimen name="admin_nav_item_text_size">12sp</dimen>
+    <dimen name="admin_nav_item_gap">5dp</dimen>
+    <dimen name="admin_nav_fab_size">60dp</dimen>
+    <dimen name="admin_nav_fab_icon_size">26dp</dimen>
+    <dimen name="admin_nav_fab_margin_start">14dp</dimen>
+    <dimen name="admin_nav_badge_size">20dp</dimen>
+    <dimen name="admin_nav_badge_text_size">10sp</dimen>
+    <dimen name="admin_nav_content_margin_bottom">112dp</dimen>
 
     <!-- ── Notification ── -->
     <dimen name="admin_notification_size">21dp</dimen>

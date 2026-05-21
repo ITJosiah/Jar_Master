@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/adminRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    android:orientation="vertical">
 
-    <!-- Fragment Container -->
+    <!-- Fragment Container (Fills space above navbar) -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigationView" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <!-- Bottom Navigation Bar -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+    <!-- Modern Bottom Navigation Bar (Sits at the bottom) -->
+    <com.example.aling_jar.admin.navigation.AdminBottomNavBar
+        android:id="@+id/adminBottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:clipToPadding="false"
-        app:elevation="8dp"
-        app:itemIconSize="24dp"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color"
-        app:itemTextAppearanceActive="@style/BottomNavTextActive"
-        app:itemTextAppearanceInactive="@style/BottomNavTextInactive"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/admin_bottom_nav_menu" />
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 
-</RelativeLayout>
+</LinearLayout>

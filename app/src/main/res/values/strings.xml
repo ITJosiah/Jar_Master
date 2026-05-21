@@ -53,4 +53,31 @@
     <!-- Google OAuth (Replace with your actual Web Client ID from Firebase Console) -->
     <string name="default_web_client_id">YOUR_WEB_CLIENT_ID_HERE</string>
 
+    <!-- Admin Bottom Nav -->
+    <string name="add_new_batch">Add New Batch</string>
+
+    <!-- User Bottom Nav -->
+    <string name="user_nav_shop">SHOP</string>
+    <string name="user_nav_orders">ORDERS</string>
+    <string name="user_nav_saved">SAVED</string>
+    <string name="user_nav_profile">PROFILE</string>
+
+    <!-- User Shop -->
+    <string name="user_search_hint">Search delicious Bicolano treats…</string>
+    <string name="user_chip_all">All Items</string>
+    <string name="user_chip_best_sellers">Best Sellers</string>
+    <string name="user_chip_laing">Laing</string>
+    <string name="user_currency_format">₱%,.2f</string>
+    <string name="user_orders_title">My Orders</string>
+    <string name="user_saved_title">Saved Items</string>
+    <string name="user_profile_title">My Profile</string>
+    <string name="user_shop_title">Aling</string>
+
+    <!-- User Profile Rows -->
+    <string name="profile_my_orders">My Orders</string>
+    <string name="profile_saved_items">Saved Items</string>
+    <string name="profile_account_info">Account Information</string>
+    <string name="profile_change_password">Change Password</string>
+    <string name="profile_about">About Aling</string>
+
 </resources>

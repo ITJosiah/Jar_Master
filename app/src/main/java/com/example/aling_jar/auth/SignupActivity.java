@@ -43,6 +43,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.example.aling_jar.utils.MapPickerActivity;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,8 +55,11 @@ public class SignupActivity extends AppCompatActivity {
     private static final String DEFAULT_ROLE = "User";
 
     // ── Input fields ──
-    private TextInputLayout tilFullName, tilEmail, tilRegPassword, tilConfirmPassword;
-    private TextInputEditText etFullName, etEmail, etRegPassword, etConfirmPassword;
+    private TextInputLayout tilFullName, tilEmail, tilRegPassword, tilConfirmPassword, tilMobileNumber, tilDeliveryAddress;
+    private TextInputEditText etFullName, etEmail, etRegPassword, etConfirmPassword, etMobileNumber, etDeliveryAddress;
+
+    // ── Activity Result Launchers ──
+    private ActivityResultLauncher<Intent> mapPickerLauncher;
 
     // ── Buttons & footer ──
     private Button btnCreateAccount;
@@ -95,6 +100,7 @@ public class SignupActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         initViews();
+        initMapPicker();
         initGoogleSignIn();
         initFacebookLogin();
         setupTermsText();
@@ -110,10 +116,15 @@ public class SignupActivity extends AppCompatActivity {
     private void initViews() {
         tilFullName        = findViewById(R.id.tilFullName);
         tilEmail           = findViewById(R.id.tilEmail);
+        tilMobileNumber     = findViewById(R.id.tilMobileNumber);
+        tilDeliveryAddress  = findViewById(R.id.tilDeliveryAddress);
         tilRegPassword     = findViewById(R.id.tilRegPassword);
         tilConfirmPassword = findViewById(R.id.tilConfirmPassword);
+        
         etFullName         = findViewById(R.id.etFullName);
         etEmail            = findViewById(R.id.etEmail);
+        etMobileNumber      = findViewById(R.id.etMobileNumber);
+        etDeliveryAddress   = findViewById(R.id.etDeliveryAddress);
         etRegPassword      = findViewById(R.id.etRegPassword);
         etConfirmPassword  = findViewById(R.id.etConfirmPassword);
 
@@ -122,6 +133,20 @@ public class SignupActivity extends AppCompatActivity {
         btnFacebook      = findViewById(R.id.btnFacebook);
         tvLogIn          = findViewById(R.id.tvLogIn);
         tvTerms          = findViewById(R.id.tvTerms);
+    }
+    
+    private void initMapPicker() {
+        mapPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        String address = result.getData().getStringExtra("address");
+                        if (address != null) {
+                            etDeliveryAddress.setText(address);
+                        }
+                    }
+                }
+        );
     }
 
     // ─────────────────────────────────────────────
@@ -191,6 +216,11 @@ public class SignupActivity extends AppCompatActivity {
         btnGoogle.setOnClickListener(v -> signUpWithGoogle());
 
         btnFacebook.setOnClickListener(v -> signUpWithFacebook());
+        
+        etDeliveryAddress.setOnClickListener(v -> {
+            Intent intent = new Intent(SignupActivity.this, MapPickerActivity.class);
+            mapPickerLauncher.launch(intent);
+        });
 
         tvLogIn.setOnClickListener(v -> {
             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
@@ -207,11 +237,15 @@ public class SignupActivity extends AppCompatActivity {
         // Clear previous errors
         tilFullName.setError(null);
         tilEmail.setError(null);
+        tilMobileNumber.setError(null);
+        tilDeliveryAddress.setError(null);
         tilRegPassword.setError(null);
         tilConfirmPassword.setError(null);
 
         String fullName    = getText(etFullName);
         String email       = getText(etEmail);
+        String mobile      = getText(etMobileNumber);
+        String address     = getText(etDeliveryAddress);
         String password    = getText(etRegPassword);
         String confirmPass = getText(etConfirmPassword);
 
@@ -230,6 +264,16 @@ public class SignupActivity extends AppCompatActivity {
             isValid = false;
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             tilEmail.setError("Enter a valid email address");
+            isValid = false;
+        }
+        
+        if (TextUtils.isEmpty(mobile)) {
+            tilMobileNumber.setError("Mobile number is required");
+            isValid = false;
+        }
+        
+        if (TextUtils.isEmpty(address)) {
+            tilDeliveryAddress.setError("Delivery address is required");
             isValid = false;
         }
 
@@ -255,6 +299,8 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent(SignupActivity.this, EmailVerificationActivity.class);
         intent.putExtra("email", email);
         intent.putExtra("fullName", fullName);
+        intent.putExtra("mobile", mobile);
+        intent.putExtra("address", address);
         intent.putExtra("password", password);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

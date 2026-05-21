@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aling_jar.R;
+import com.example.aling_jar.data.model.Batch;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -42,22 +43,44 @@ public class DashboardBatchAdapter extends RecyclerView.Adapter<DashboardBatchAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Batch batch = batchList.get(position);
 
-        // Batch ID + Supplier line
-        String batchId = batch.getDocumentId() != null
-                ? "#" + batch.getDocumentId().substring(0, Math.min(4, batch.getDocumentId().length())).toUpperCase()
-                : "#N/A";
-        String supplier = batch.getName() != null ? batch.getName().split(" ")[0] : "";
-        holder.tvBatchIdSupplier.setText(batchId + " • " + supplier);
+        // Line 1: Batch ID
+        String batchId = batch.getBatchId() != null ? batch.getBatchId() :
+                (batch.getDocumentId() != null ? batch.getDocumentId().substring(0, Math.min(6, batch.getDocumentId().length())).toUpperCase() : "N/A");
+        holder.tvBatchIdSupplier.setText("#" + batchId);
 
-        // Product name
+        // Line 2: Product Name (bold)
         holder.tvProductName.setText(batch.getName() != null ? batch.getName() : "Unknown Product");
 
-        // Expiry date
+        // Line 3: Size · Flavor · Ingredient
+        String flavor = batch.getFlavorProfile() != null ? batch.getFlavorProfile() : "Classic";
+        String ingredient = batch.getIngredient() != null ? batch.getIngredient() : ""; // Optional depending on how strict we want defaults
+        String size   = batch.getSize()          != null ? batch.getSize()          : "";
+        
+        StringBuilder profileBuilder = new StringBuilder();
+        if (!size.isEmpty()) profileBuilder.append(size).append(" · ");
+        profileBuilder.append(flavor);
+        if (!ingredient.isEmpty()) profileBuilder.append(" · ").append(ingredient);
+        
+        if (holder.tvSizeProfile != null) holder.tvSizeProfile.setText(profileBuilder.toString());
+
+        // Dates
+        StringBuilder dateBuilder = new StringBuilder();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        SimpleDateFormat timeSdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
         if (batch.getExpiryDate() != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-            holder.tvExpiryDate.setText("Exp: " + sdf.format(batch.getExpiryDate().toDate()));
+            dateBuilder.append("Exp: ").append(sdf.format(batch.getExpiryDate().toDate()));
+        }
+
+        if (batch.getCreatedAt() != null) {
+            if (dateBuilder.length() > 0) dateBuilder.append("  •  ");
+            dateBuilder.append("Logged: ").append(timeSdf.format(batch.getCreatedAt().toDate()));
+        }
+
+        if (dateBuilder.length() > 0) {
+            holder.tvExpiryDate.setText(dateBuilder.toString());
         } else {
-            holder.tvExpiryDate.setText("No expiry set");
+            holder.tvExpiryDate.setText("No dates available");
         }
 
         // Status badge + left border color
@@ -65,16 +88,19 @@ public class DashboardBatchAdapter extends RecyclerView.Adapter<DashboardBatchAd
         holder.tvStatus.setText(status);
 
         switch (status.toUpperCase()) {
-            case "SELLING FAST":
+            case "30 DAYS OLD":
+                holder.tvStatus.setText("30 DAYS");
                 holder.tvStatus.setTextColor(0xFFFF9800);
                 holder.itemView.setBackgroundResource(R.drawable.bg_batch_border_orange);
                 break;
             case "CRITICAL":
+                holder.tvStatus.setText("Near Expiry");
                 holder.tvStatus.setTextColor(0xFFF44336);
                 holder.itemView.setBackgroundResource(R.drawable.bg_batch_border_red);
                 break;
             case "FRESH":
             default:
+                holder.tvStatus.setText("FRESH");
                 holder.tvStatus.setTextColor(0xFF4CAF50);
                 holder.itemView.setBackgroundResource(R.drawable.bg_batch_border_green);
                 break;
@@ -101,17 +127,18 @@ public class DashboardBatchAdapter extends RecyclerView.Adapter<DashboardBatchAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvBatchIdSupplier, tvProductName, tvExpiryDate, tvStatus;
+        TextView tvBatchIdSupplier, tvProductName, tvSizeProfile, tvExpiryDate, tvStatus;
         ImageView btnEdit, btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvBatchIdSupplier = itemView.findViewById(R.id.tvBatchIdSupplier);
-            tvProductName = itemView.findViewById(R.id.tvProductName);
-            tvExpiryDate = itemView.findViewById(R.id.tvExpiryDate);
-            tvStatus = itemView.findViewById(R.id.tvStatus);
-            btnEdit = itemView.findViewById(R.id.btnEdit);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
+            tvProductName     = itemView.findViewById(R.id.tvProductName);
+            tvSizeProfile     = itemView.findViewById(R.id.tvSizeProfile);
+            tvExpiryDate      = itemView.findViewById(R.id.tvExpiryDate);
+            tvStatus          = itemView.findViewById(R.id.tvStatus);
+            btnEdit           = itemView.findViewById(R.id.btnEdit);
+            btnDelete         = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

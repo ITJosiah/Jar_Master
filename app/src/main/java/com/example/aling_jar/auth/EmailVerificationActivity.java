@@ -35,7 +35,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
     private static final String DEFAULT_ROLE = "User";
 
-    private String email, fullName, password;
+    private String email, fullName, password, mobile, address;
     private String generatedCode;
 
     private FirebaseAuth mAuth;
@@ -62,6 +62,8 @@ public class EmailVerificationActivity extends AppCompatActivity {
         email    = getIntent().getStringExtra("email");
         fullName = getIntent().getStringExtra("fullName");
         password = getIntent().getStringExtra("password");
+        mobile   = getIntent().getStringExtra("mobile");
+        address  = getIntent().getStringExtra("address");
 
         initViews();
         setupDescription();
@@ -234,6 +236,8 @@ public class EmailVerificationActivity extends AppCompatActivity {
         Map<String, Object> userData = new HashMap<>();
         userData.put("fullName", fullName);
         userData.put("email", email);
+        userData.put("mobileNumber", mobile != null ? mobile : "");
+        userData.put("address", address != null ? address : "");
         userData.put("role", DEFAULT_ROLE);
         userData.put("createdAt", System.currentTimeMillis());
 

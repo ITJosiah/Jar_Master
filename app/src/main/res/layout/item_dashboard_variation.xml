@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvVarName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Classic Laing"
+            android:textSize="14sp"
+            android:textColor="#222222"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvVarDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Pork • 320g"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvVarStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="15 Jars"
+            android:textSize="14sp"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/user_bg">
+
+    <!-- Top App Bar (Uniform Style) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/admin_padding"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/saved_ic"
+            android:background="@drawable/bg_badge_green"
+            app:tint="@color/green_primary"
+            android:layout_marginEnd="@dimen/admin_topbar_icon_gap_large" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/user_saved_title"
+            android:textSize="@dimen/admin_topbar_title_large"
+            android:textColor="#222222"
+            android:fontFamily="@font/inter_bold" />
+
+        <ImageView
+            android:id="@+id/ivNotification"
+            android:layout_width="@dimen/admin_topbar_btn_size"
+            android:layout_height="@dimen/admin_topbar_btn_size"
+            android:padding="@dimen/admin_topbar_btn_padding"
+            android:src="@drawable/ic_notification"
+            android:background="@drawable/bg_badge_green"
+            app:tint="@color/green_primary"
+            android:contentDescription="Notifications" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/text_hint" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSavedProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="12dp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp" />
+
+    <LinearLayout
+        android:id="@+id/layoutEmptySaved"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/saved_ic"
+            app:tint="#E0E0E0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="No saved items"
+            android:textSize="18sp"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/text_secondary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Tap the heart icon on any product to save it here!"
+            android:textSize="14sp"
+            android:textColor="@color/text_hint" />
+
+    </LinearLayout>
+
+</LinearLayout>

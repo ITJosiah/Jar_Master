@@ -7,7 +7,7 @@
     android:background="#F5F5F5"
     android:fillViewport="true"
     android:clipToPadding="false"
-    android:paddingBottom="24dp">
+    android:paddingBottom="@dimen/admin_nav_content_margin_bottom">
 
     <LinearLayout
         android:layout_width="match_parent"

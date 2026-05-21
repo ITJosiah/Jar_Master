@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Round green add-to-cart button -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/green_primary" />
+    <size android:width="28dp" android:height="28dp" />
+</shape>

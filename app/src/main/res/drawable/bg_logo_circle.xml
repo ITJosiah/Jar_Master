@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Light-green circle background for the teaspoon logo in the shop top bar -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/green_light_bg" />
+    <size android:width="40dp" android:height="40dp" />
+</shape>

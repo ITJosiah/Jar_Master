@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Single nav item template: icon (with badge overlay) + label -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/admin_nav_pill_padding_h"
+    android:paddingEnd="@dimen/admin_nav_pill_padding_h"
+    android:paddingTop="@dimen/admin_nav_pill_padding_v"
+    android:paddingBottom="@dimen/admin_nav_pill_padding_v"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackgroundBorderless">
+
+    <!-- Icon wrapper: allows badge overlay -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/navItemIcon"
+            android:layout_width="@dimen/admin_nav_item_icon_size"
+            android:layout_height="@dimen/admin_nav_item_icon_size"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            tools:src="@drawable/ic_overview" />
+
+        <!-- Badge (hidden by default) -->
+        <TextView
+            android:id="@+id/navItemBadge"
+            android:layout_width="@dimen/admin_nav_badge_size"
+            android:layout_height="@dimen/admin_nav_badge_size"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="-4dp"
+            android:layout_marginEnd="-8dp"
+            android:background="@drawable/bg_nav_badge"
+            android:gravity="center"
+            android:textColor="@color/nav_badge_text"
+            android:textSize="@dimen/admin_nav_badge_text_size"
+            android:fontFamily="@font/inter_bold"
+            android:visibility="gone"
+            tools:text="18"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/navItemLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/admin_nav_item_gap"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textSize="@dimen/admin_nav_item_text_size"
+        android:letterSpacing="0.04"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="7sp"
+        app:autoSizeMaxTextSize="@dimen/admin_nav_item_text_size"
+        app:autoSizeStepGranularity="1sp"
+        tools:text="OVERVIEW" />
+
+</LinearLayout>
