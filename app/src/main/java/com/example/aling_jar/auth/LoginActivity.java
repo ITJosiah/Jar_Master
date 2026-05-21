@@ -19,12 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aling_jar.R;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,7 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -54,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etUsername, etPassword;
     private CheckBox cbRememberMe;
     private Button btnSignIn;
-    private LinearLayout btnGoogle, btnFacebook;
+    private LinearLayout btnGoogle;
     private TextView tvForgotPassword, tvRequestAccess;
 
     // ── SharedPreferences ──
@@ -70,8 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private ActivityResultLauncher<Intent> googleSignInLauncher;
 
-    // ── Facebook Login ──
-    private CallbackManager facebookCallbackManager;
+
 
     // ── Loading dialog ──
     private AlertDialog loadingDialog;
@@ -97,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initViews();
         initGoogleSignIn();
-        initFacebookLogin();
+
         loadRememberedUser();
         setClickListeners();
     }
@@ -114,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         cbRememberMe     = findViewById(R.id.cbRememberMe);
         btnSignIn        = findViewById(R.id.btnSignIn);
         btnGoogle        = findViewById(R.id.btnGoogle);
-        btnFacebook      = findViewById(R.id.btnFacebook);
+
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         tvRequestAccess  = findViewById(R.id.tvRequestAccess);
     }
@@ -147,34 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-    // ─────────────────────────────────────────────
-    //  3. Facebook Login Setup
-    // ─────────────────────────────────────────────
 
-    private void initFacebookLogin() {
-        facebookCallbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(facebookCallbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        dismissLoadingDialog();
-                        Toast.makeText(LoginActivity.this, "Facebook login cancelled", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        dismissLoadingDialog();
-                        Log.w(TAG, "Facebook login error", error);
-                        Toast.makeText(LoginActivity.this, "Facebook login failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     // ─────────────────────────────────────────────
     //  4. Load Remembered Username
@@ -200,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // OAuth buttons
         btnGoogle.setOnClickListener(v -> signInWithGoogle());
-        btnFacebook.setOnClickListener(v -> signInWithFacebook());
+
 
         // Forgot Password
         tvForgotPassword.setOnClickListener(v -> {
@@ -325,33 +292,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    // ─────────────────────────────────────────────
-    //  8. Facebook OAuth Flow
-    // ─────────────────────────────────────────────
 
-    private void signInWithFacebook() {
-        showLoadingDialog("Signing in with Facebook…");
-        LoginManager.getInstance().logInWithReadPermissions(
-                this, Arrays.asList("email", "public_profile"));
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            ensureUserExistsAndNavigate(user);
-                        }
-                    } else {
-                        dismissLoadingDialog();
-                        Log.w(TAG, "Firebase auth with Facebook failed", task.getException());
-                        Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     // ─────────────────────────────────────────────
     //  9. User Profile & Navigation
@@ -373,25 +314,13 @@ public class LoginActivity extends AppCompatActivity {
                         dismissLoadingDialog();
                         onLoginSuccess(role != null ? role : "Unknown");
                     } else {
-                        // First-time OAuth user — create profile
-                        Map<String, Object> userData = new HashMap<>();
-                        userData.put("fullName", user.getDisplayName() != null ? user.getDisplayName() : "");
-                        userData.put("email", user.getEmail() != null ? user.getEmail() : "");
-                        userData.put("role", DEFAULT_ROLE);
-                        userData.put("createdAt", System.currentTimeMillis());
-
-                        db.collection("users").document(uid)
-                                .set(userData)
-                                .addOnSuccessListener(aVoid -> {
-                                    dismissLoadingDialog();
-                                    onLoginSuccess(DEFAULT_ROLE);
-                                })
-                                .addOnFailureListener(e -> {
-                                    dismissLoadingDialog();
-                                    Log.w(TAG, "Failed to create user profile", e);
-                                    // Still navigate — auth succeeded
-                                    onLoginSuccess(DEFAULT_ROLE);
-                                });
+                        // Account does not exist in Firestore
+                        dismissLoadingDialog();
+                        // Sign out and delete the partially created Firebase Auth user
+                        mAuth.signOut();
+                        googleSignInClient.signOut();
+                        user.delete();
+                        Toast.makeText(LoginActivity.this, "Account does not exist. Please sign up first.", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -460,10 +389,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Forward result to Facebook SDK
-        facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+
 }

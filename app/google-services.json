@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "764723440527-jmq2s9lgaunlog1eehnudu0k9i3jgp9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aling_jar",
+            "certificate_hash": "3f38d93054d263f87fac9ef05b23fb4314d1f34d"
+          }
+        },
+        {
           "client_id": "764723440527-gsosqok3s6mj6uldcol866t5dgrfcdir.apps.googleusercontent.com",
           "client_type": 3
         }

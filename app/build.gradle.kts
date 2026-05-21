@@ -24,9 +24,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "facebook_app_id", localProperties["FACEBOOK_APP_ID"] as String)
-        resValue("string", "fb_login_protocol_scheme", "fb${localProperties["FACEBOOK_APP_ID"] as String}")
-        resValue("string", "facebook_client_token", localProperties["FACEBOOK_CLIENT_TOKEN"] as String)
+
 
         resValue("string", "cloudinary_cloud_name", localProperties["CLOUDINARY_CLOUD_NAME"] as String)
         resValue("string", "cloudinary_api_key", localProperties["CLOUDINARY_API_KEY"] as String)
@@ -71,8 +69,7 @@ dependencies {
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
-    // Facebook Login SDK
-    implementation("com.facebook.android:facebook-login:17.0.0")
+
 
     implementation(libs.appcompat)
     implementation(libs.material)

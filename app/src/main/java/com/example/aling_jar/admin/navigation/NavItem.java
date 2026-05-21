@@ -13,7 +13,7 @@ public enum NavItem {
     OVERVIEW(R.drawable.ic_overview, "OVERVIEW", R.id.nav_overview),
     INVENTORY(R.drawable.ic_inventory, "INVENTORY", R.id.nav_inventory),
     ORDERS(R.drawable.ic_orders, "ORDERS", R.id.nav_orders),
-    SETTINGS(R.drawable.ic_settings, "SETTINGS", R.id.nav_settings);
+    PROFILE(R.drawable.profile_ic, "PROFILE", R.id.nav_settings);
 
     private final int iconRes;
     private final String label;

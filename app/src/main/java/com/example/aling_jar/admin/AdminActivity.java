@@ -109,7 +109,7 @@ public class AdminActivity extends AppCompatActivity {
             case OVERVIEW:  switchFragment(dashboardFragment); break;
             case INVENTORY: switchFragment(batchesFragment);   break;
             case ORDERS:    switchFragment(ordersFragment);     break;
-            case SETTINGS:  switchFragment(settingsFragment);   break;
+            case PROFILE:   switchFragment(settingsFragment);   break;
         }
     }
 

@@ -3,12 +3,7 @@ package com.example.aling_jar.auth;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aling_jar.R;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,7 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -63,8 +53,8 @@ public class SignupActivity extends AppCompatActivity {
 
     // ── Buttons & footer ──
     private Button btnCreateAccount;
-    private LinearLayout btnGoogle, btnFacebook;
-    private TextView tvLogIn, tvTerms;
+    private LinearLayout btnGoogle;
+    private TextView tvLogIn;
 
     // ── Firebase ──
     private FirebaseAuth mAuth;
@@ -74,8 +64,7 @@ public class SignupActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private ActivityResultLauncher<Intent> googleSignInLauncher;
 
-    // ── Facebook Login ──
-    private CallbackManager facebookCallbackManager;
+
 
     // ── Loading dialog ──
     private AlertDialog loadingDialog;
@@ -102,8 +91,8 @@ public class SignupActivity extends AppCompatActivity {
         initViews();
         initMapPicker();
         initGoogleSignIn();
-        initFacebookLogin();
-        setupTermsText();
+
+
         setClickListeners();
 
 
@@ -130,9 +119,9 @@ public class SignupActivity extends AppCompatActivity {
 
         btnCreateAccount = findViewById(R.id.btnCreateAccount);
         btnGoogle        = findViewById(R.id.btnGoogle);
-        btnFacebook      = findViewById(R.id.btnFacebook);
+
         tvLogIn          = findViewById(R.id.tvLogIn);
-        tvTerms          = findViewById(R.id.tvTerms);
+
     }
     
     private void initMapPicker() {
@@ -177,34 +166,7 @@ public class SignupActivity extends AppCompatActivity {
         );
     }
 
-    // ─────────────────────────────────────────────
-    //  3. Facebook Login Setup
-    // ─────────────────────────────────────────────
 
-    private void initFacebookLogin() {
-        facebookCallbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(facebookCallbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        dismissLoadingDialog();
-                        Toast.makeText(SignupActivity.this, "Facebook login cancelled", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        dismissLoadingDialog();
-                        Log.w(TAG, "Facebook login error", error);
-                        Toast.makeText(SignupActivity.this, "Facebook login failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     // ─────────────────────────────────────────────
     //  4. Click Listeners
@@ -215,7 +177,7 @@ public class SignupActivity extends AppCompatActivity {
 
         btnGoogle.setOnClickListener(v -> signUpWithGoogle());
 
-        btnFacebook.setOnClickListener(v -> signUpWithFacebook());
+
         
         etDeliveryAddress.setOnClickListener(v -> {
             Intent intent = new Intent(SignupActivity.this, MapPickerActivity.class);
@@ -337,33 +299,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    // ─────────────────────────────────────────────
-    //  7. Facebook OAuth Flow
-    // ─────────────────────────────────────────────
 
-    private void signUpWithFacebook() {
-        showLoadingDialog("Signing up with Facebook…");
-        LoginManager.getInstance().logInWithReadPermissions(
-                this, Arrays.asList("email", "public_profile"));
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            saveOAuthUserAndNavigate(user);
-                        }
-                    } else {
-                        dismissLoadingDialog();
-                        Log.w(TAG, "Firebase auth with Facebook failed", task.getException());
-                        Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     // ─────────────────────────────────────────────
     //  8. Save OAuth User & Navigate
@@ -377,28 +313,15 @@ public class SignupActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(document -> {
                     if (document.exists()) {
-                        // Returning user — go straight to main
+                        // Returning user — shouldn't be signing up again
                         dismissLoadingDialog();
-                        navigateToMain();
+                        Toast.makeText(SignupActivity.this, "Account already exists. Please log in.", Toast.LENGTH_LONG).show();
+                        mAuth.signOut();
+                        googleSignInClient.signOut();
                     } else {
-                        // New user — create Firestore profile
-                        Map<String, Object> userData = new HashMap<>();
-                        userData.put("fullName", user.getDisplayName() != null ? user.getDisplayName() : "");
-                        userData.put("email", user.getEmail() != null ? user.getEmail() : "");
-                        userData.put("role", DEFAULT_ROLE);
-                        userData.put("createdAt", System.currentTimeMillis());
-
-                        db.collection("users").document(uid)
-                                .set(userData)
-                                .addOnSuccessListener(aVoid -> {
-                                    dismissLoadingDialog();
-                                    navigateToSuccess();
-                                })
-                                .addOnFailureListener(e -> {
-                                    dismissLoadingDialog();
-                                    Log.w(TAG, "Failed to save user data", e);
-                                    Toast.makeText(this, "Failed to save user data", Toast.LENGTH_SHORT).show();
-                                });
+                        // New user — ask for password
+                        dismissLoadingDialog();
+                        promptForPasswordAndRegister(user);
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -406,6 +329,74 @@ public class SignupActivity extends AppCompatActivity {
                     Log.w(TAG, "Failed to check existing user", e);
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void promptForPasswordAndRegister(FirebaseUser user) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_password, null);
+        com.google.android.material.textfield.TextInputEditText etPassword = dialogView.findViewById(R.id.etDialogPassword);
+        com.google.android.material.textfield.TextInputEditText etConfirmPassword = dialogView.findViewById(R.id.etDialogConfirmPassword);
+        Button btnCancel = dialogView.findViewById(R.id.btnDialogCancel);
+        Button btnSave = dialogView.findViewById(R.id.btnDialogSave);
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(false)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.bg_dialog_rounded);
+        }
+
+        btnCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+            user.delete();
+            mAuth.signOut();
+            googleSignInClient.signOut();
+        });
+
+        btnSave.setOnClickListener(v -> {
+            String password = etPassword.getText() != null ? etPassword.getText().toString() : "";
+            String confirmPassword = etConfirmPassword.getText() != null ? etConfirmPassword.getText().toString() : "";
+
+            if (password.length() < 6) {
+                Toast.makeText(this, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (!password.equals(confirmPassword)) {
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            dialog.dismiss();
+            showLoadingDialog("Securing account…");
+            user.updatePassword(password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Proceed to save in Firestore
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("fullName", user.getDisplayName() != null ? user.getDisplayName() : "");
+                    userData.put("email", user.getEmail() != null ? user.getEmail() : "");
+                    userData.put("role", DEFAULT_ROLE);
+                    userData.put("createdAt", System.currentTimeMillis());
+
+                    db.collection("users").document(user.getUid())
+                            .set(userData)
+                            .addOnSuccessListener(aVoid -> {
+                                dismissLoadingDialog();
+                                navigateToSuccess();
+                            })
+                            .addOnFailureListener(e -> {
+                                dismissLoadingDialog();
+                                Log.w(TAG, "Failed to save user data", e);
+                                Toast.makeText(SignupActivity.this, "Failed to save user data", Toast.LENGTH_SHORT).show();
+                            });
+                } else {
+                    dismissLoadingDialog();
+                    Toast.makeText(this, "Failed to set password.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+        dialog.show();
     }
 
     // ─────────────────────────────────────────────
@@ -428,37 +419,7 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
-    // ─────────────────────────────────────────────
-    //  10. Terms & Services Spannable
-    // ─────────────────────────────────────────────
 
-    private void setupTermsText() {
-        String full = getString(R.string.terms_text);
-        SpannableString spannable = new SpannableString(full);
-        int green = getColor(R.color.green_primary);
-
-        applyClickableSpan(spannable, full, "Terms of Service", green);
-        applyClickableSpan(spannable, full, "Privacy Policy", green);
-
-        tvTerms.setText(spannable);
-        tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
-        tvTerms.setHighlightColor(Color.TRANSPARENT);
-    }
-
-    private void applyClickableSpan(SpannableString spannable, String full,
-                                     String target, int color) {
-        int start = full.indexOf(target);
-        if (start < 0) return;
-
-        spannable.setSpan(new ForegroundColorSpan(color),
-                start, start + target.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                Toast.makeText(SignupActivity.this, target, Toast.LENGTH_SHORT).show();
-            }
-        }, start, start + target.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
 
     // ─────────────────────────────────────────────
     //  11. Loading Dialog
@@ -501,10 +462,5 @@ public class SignupActivity extends AppCompatActivity {
         return editText.getText() != null ? editText.getText().toString().trim() : "";
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Forward result to Facebook SDK
-        facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+
 }

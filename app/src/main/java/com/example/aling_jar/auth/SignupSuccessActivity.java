@@ -51,9 +51,10 @@ public class SignupSuccessActivity extends AppCompatActivity {
             finish();
         });
 
-        // "Go to Dashboard" → go to MainActivity with the user's role
+        // "Go to Dashboard" → go to UserActivity with the user's role
         tvGoToDashboard.setOnClickListener(v -> {
-            Intent intent = new Intent(SignupSuccessActivity.this, MainActivity.class);
+            Intent intent = new Intent(SignupSuccessActivity.this, com.example.aling_jar.user.UserActivity.class);
+            intent.putExtra("role", "User");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
